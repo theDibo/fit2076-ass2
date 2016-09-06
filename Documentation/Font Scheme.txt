@@ -1,0 +1,9 @@
+Heading - Exo 2
+font-family: 'Exo 2', sans-serif;
+
+Body - Open Sans
+font-family: 'Open Sans', sans-serif;
+
+<link href="https://fonts.googleapis.com/css?family=Exo+2|Open+Sans" rel="stylesheet">
+
+Logo image source: 
