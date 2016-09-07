@@ -1,7 +1,69 @@
+/*
+	COLOUR SCHEME:
+	Background: #C5C1C0 'Screen'
+	Low: #0A1612 'Steel'
+	Mid: #1A2930 'Denim'
+	High: #F7CE3E 'Marigold'
+*/
+
+body {
+	background-color: #FFF;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Exo 2', sans-serif;
 }
 
-p {
+p a {
 	font-family: 'Open Sans', sans-serif;
 }
+
+header {
+	background-color: #C5C1C0;
+}
+
+#top {
+	min-height: 100px;
+	max-height: 200px;
+}
+
+.full-height {
+	height: 100%;
+}
+
+.sidebar {
+	background-color: #C5C1C0;
+}
+
+.sidenav {
+	padding-top: 20px;
+	height: 100%;
+}
+
+.topnavbar {
+	background-color: #0A1612;
+}
+
+footer {
+	background-color: #0A1612;
+	color: white;
+	padding: 15px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {height:auto;}
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+.row.content {height: 450px}
