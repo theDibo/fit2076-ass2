@@ -29,7 +29,7 @@ header {
 
 .sidenav {
 	padding-top: 20px;
-	background-color: #C5C1C0;
+	background-color: #FFF;
 	min-height: 100%;
 }
 
@@ -53,9 +53,9 @@ footer {
 	background-color: #0A1612;
 	color: white;
 	padding: 15px;
-	position: absolute;
 	bottom: 0px;
 	width: 100%;
+	font-size: 12px;
 }
 
 @media screen and (max-width: 767px) {
@@ -71,4 +71,13 @@ footer {
 	border-radius: 0;
 }
 
-.row.content {height: 450px}
+.row.content {height:100%}
+
+#content {
+	min-height: 674px;
+}
+
+table {
+	padding: 5px;
+	border: 0px solid black;
+}
