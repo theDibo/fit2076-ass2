@@ -6,4 +6,4 @@ font-family: 'Open Sans', sans-serif;
 
 <link href="https://fonts.googleapis.com/css?family=Exo+2|Open+Sans" rel="stylesheet">
 
-Logo image source: 
+Logo image source: freepik.com
