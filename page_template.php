@@ -5,8 +5,11 @@ ob_start();
 // Checks if the user is logged on, and if not redirects them to the login page. Must be at the top of every page.
 session_start();
 
-if (!isset($_SESSION['login']) || $_SESSION['login'] != true) {
-    header("Location: login.html"); 
+if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    // User is logged in
+	echo "<!-- User logged in -->";
+} else {
+	header("Location: login.php"); 
 }
 ?>
 <html lang="en">
@@ -50,7 +53,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != true) {
         <li><a href="images.php">Images</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="documentation.html"><span class="glyphicon glyphicon-list-alt"></span> Documentation</a></li>
+        <li><a href="documentation.html"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
       </ul>
     </div>
   </div>

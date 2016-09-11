@@ -9,10 +9,11 @@ session_start();
  define("MONASH_FILTER","o=Monash University, c=au");
 
 // If the user is already logged in, redirect to the home page
-if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
+if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     header("Location: index.php"); 
 }
 ?>
+
 <html lang="en">
 <head>
  
@@ -50,7 +51,7 @@ if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
 </tr>
 <tr>
 	<td><label for="password">Password: </label></td>
-	<td><input type="text" name="password" /></td>
+	<td><input type="password" name="password" /></td>
 </tr>
 <br />
 <tr><td></td><td><input type="submit" value="Login" /></td></tr>
@@ -60,8 +61,11 @@ if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
 
 <?php 
 	// If there is an error message
-	if (isset($_GET["error"])) {
-		$error = $_GET["error"];
+	if (isset($_SESSION["error"])) {
+		// Store the error code
+		$error = $_SESSION["error"];
+		// Unset the session variable
+		unset($_SESSION["error"]);
 		echo "<center><p class='error'>";
 		if ($error == 1) {
 			echo "Username and password do not match.";
@@ -69,10 +73,9 @@ if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
 			echo "Could not connect to the Moansh Authcate server. Please try again later.";
 		}
 		echo "</p></center>";
-	}
-?>
 
-	<?php
+	}
+		
 		// Else, try to log in using the Monash Authcate LDAP server
 		} else {
 		// Try to connect to the authcate ldap server
@@ -81,30 +84,30 @@ if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
 		// If connection was successful
 		if ($LDAPconn) {
 			
-			// Check if the entered username exists
+			// Search the LDAP server for the username
 			$LDAPsearch = @ldap_search($LDAPconn, MONASH_FILTER, "uid=".$_POST["username"]);
 			
-			// If the username exists
+			// If the search was successful
 			if ($LDAPsearch) {
 				
-				// Check if the entered password matches the username
+				// Check that the username exists
 				$LDAPinfo = @ldap_first_entry($LDAPconn, $LDAPsearch);
 				
 				if ($LDAPinfo) {
-					
+					// LDAPresult will be true if the password matches
 					$LDAPresult = @ldap_bind($LDAPconn, ldap_get_dn($LDAPconn, $LDAPinfo), $_POST["password"]);
 					$LDAPerror = 1;
 					
 				} else {
-					// Username does not 
+					// Username does not exist 
 					$LDAPresult = 0;
 					$LDAPerror = 1;
 				}
 				
 			} else {
-				// Username does not exist
+				// Search was not successful
 				$LDAPresult = 0;
-				$LDAPerror = 1;
+				$LDAPerror = 2;
 			}
 			
 		} else {
@@ -115,17 +118,17 @@ if (isset($_SESSION['login']) || $_SESSION['login'] == true) {
 		
 		// If the login was successful, set session status to logged in, otherwise refresh page and add an error message
 		if ($LDAPresult) {
-			$_SESSION['login'] = true;
+			$_SESSION["login"] = true;
 			// Redirect to index page - this could be changed to a target page if desired
 			header("Location: index.php");
 		} else {
-			$_SESSION['login'] = false;
+			$_SESSION["login"] = false;
 			// Redisplay the form with the error message
-			header("Location: index.php?error=$LDAPerror");
+			$_SESSION["error"] = $LDAPerror;
+			header("Location: index.php");
 		}
+	}
 	?>
-
 
 </body>
 </html>
-
