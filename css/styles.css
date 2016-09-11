@@ -81,3 +81,7 @@ table {
 	padding: 5px;
 	border: 0px solid black;
 }
+
+.error {
+	color: red;
+}

@@ -1,3 +1,4 @@
 Finalise page template
-Write trylogin page
+Convert index.html to php file as per template
+Finish login page
 Property page

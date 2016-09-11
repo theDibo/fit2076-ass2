@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+<?php 
+// Start output buffering
+ob_start();
+
+// Checks if the user is logged on, and if not redirects them to the login page. Must be at the top of every page.
+session_start();
+
+if (!isset($_SESSION['login']) || $_SESSION['login'] != true) {
+    header("Location: login.html"); 
+}
+?>
 <html lang="en">
 <head>
  
