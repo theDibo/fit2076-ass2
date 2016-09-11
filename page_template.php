@@ -2,15 +2,8 @@
 // Start output buffering
 ob_start();
 
-// Checks if the user is logged on, and if not redirects them to the login page. Must be at the top of every page.
-session_start();
+include("checklogin.php");
 
-if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
-    // User is logged in
-	echo "<!-- User logged in -->";
-} else {
-	header("Location: login.php"); 
-}
 ?>
 <html lang="en">
 <head>
@@ -31,34 +24,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
 	<center><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></center>
 </header>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid topnavbar">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Menu</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="index.php">Home</a></li>
-        <li><a href="property.php">Properties</a></li>
-        <li><a href="multi_property.php">Multiple Property Edit</a></li>
-        <li><a href="property_type.php">Property Types</a></li>
-        <li><a href="property_feature.php">Property Features</a></li>
-        <li><a href="buyers.php">Buyers</a></li>
-        <li><a href="sellers.php">Sellers</a></li>
-        <li><a href="images.php">Images</a></li>
-        <li><a href="documentation.php"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php include("navbar.php"); ?>
   
 <div class="container-fluid text-center" id="content">
 	<div class="row content">
@@ -84,9 +50,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
 	</div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>This site was created for Assignment 2 of unit FIT2076-S2-2016 by Andrew (Ha Nam Anh) Pham and Douglas Rintoul. Logo uses image provided by freepik.com.</p>
-</footer>
+<?php include("footer.php"); ?>
 
 </body>
 </html>
