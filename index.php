@@ -43,17 +43,18 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Properties</a></li>
-        <li><a href="#">Multiple Property Edit</a></li>
-        <li><a href="#">Property Types</a></li>
-        <li><a href="#">Property Features</a></li>
-        <li><a href="#">Buyers</a></li>
-        <li><a href="#">Sellers</a></li>
-        <li><a href="#">Images</a></li>
+        <li class="active"><a href="index.php">Home</a></li>
+        <li><a href="property.php">Properties</a></li>
+        <li><a href="multi_property.php">Multiple Property Edit</a></li>
+        <li><a href="property_type.php">Property Types</a></li>
+        <li><a href="property_feature.php">Property Features</a></li>
+        <li><a href="buyers.php">Buyers</a></li>
+        <li><a href="sellers.php">Sellers</a></li>
+        <li><a href="images.php">Images</a></li>
+        <li><a href="documentation.php"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
+        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
       </ul>
     </div>
   </div>

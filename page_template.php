@@ -51,9 +51,10 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
         <li><a href="buyers.php">Buyers</a></li>
         <li><a href="sellers.php">Sellers</a></li>
         <li><a href="images.php">Images</a></li>
+        <li><a href="documentation.php"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="documentation.html"><span class="glyphicon glyphicon-list-alt"></span>  Documentation</a></li>
+        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
       </ul>
     </div>
   </div>
