@@ -85,3 +85,17 @@ table {
 .error {
 	color: red;
 }
+
+.display-table {
+	border: 2px solid #0A1612;
+	position: relative;
+	top: 50px;
+}
+
+.display-table td, th {
+	padding: 10px;
+}
+
+.display-table th {
+	text-align: center;
+}
