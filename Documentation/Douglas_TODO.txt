@@ -1,4 +1,2 @@
-Finalise page template
-Convert index.html to php file as per template
-Finish login page
 Property page
+Remember to use oci_bind_by_name to prevent SQL injection

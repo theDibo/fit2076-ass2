@@ -62,8 +62,9 @@ oci_execute($stmt);
 				<td><?php echo $row["PROPERTY_ADDRESS"] ?></td>
 				<td><?php echo $row["PROPERTY_SUBURB"] ?></td>
 				<?php
-					$query = "SELECT * FROM PropertyType WHERE type_id = ".$row["TYPE_ID"];
+					$query = "SELECT * FROM PropertyType WHERE type_id = :type_id";
 					$stmt2 = oci_parse($conn, $query);
+					oci_bind_by_name($stmt2, ":type_id", $row["TYPE_ID"]);
 					oci_execute($stmt2);
 					$type = oci_fetch_array($stmt2);
 					oci_free_statement($stmt2);
