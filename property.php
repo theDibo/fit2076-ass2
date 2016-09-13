@@ -41,6 +41,13 @@ oci_execute($stmt);
 		</div>
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
+  	  
+  	  <center><h1 class="page-title">Properties</h1></center>
+  	  
+  	  <div class="col-md-6 col-md-offset-2">
+	  <a href="create_property.php" class="btn btn-default btn-md col-md-5">Create New Property</a>
+	  </div>
+  	  
 	  	  <table border="1" align="center" class="display-table">
 	
 			<tr>

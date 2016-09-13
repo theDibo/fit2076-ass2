@@ -8,7 +8,7 @@ include("checklogin.php");
 <html lang="en">
 <head>
  
-  <title>PAGE TITLE</title>
+  <title>RRE - Edit Property</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -33,7 +33,11 @@ include("checklogin.php");
 		</div>
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
-	  	  <h1 class="page-title">Title</h1>
+
+		  <center><h1 class="page-title">Edit Property</h1></center>
+		  
+		
+		  
 		</div>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->

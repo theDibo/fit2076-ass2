@@ -10,7 +10,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.php">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="property.php">Properties</a></li>
         <li><a href="multi_property.php">Multiple Property Edit</a></li>
         <li><a href="property_type.php">Property Types</a></li>
