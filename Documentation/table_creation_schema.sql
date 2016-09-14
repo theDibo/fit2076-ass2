@@ -17,8 +17,7 @@ CONSTRAINT BOOL_Seller CHECK (seller_mailing in ('Y', 'N'))
 CREATE SEQUENCE seller_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Buyer Table */
 CREATE TABLE Buyer (
@@ -39,8 +38,7 @@ CONSTRAINT BOOL_Buyer CHECK (buyer_mailing in ('Y', 'N'))
 CREATE SEQUENCE buyer_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Agent Table */
 CREATE TABLE Agent (
@@ -55,8 +53,7 @@ CONSTRAINT PK_Agent PRIMARY KEY (agent_id)
 CREATE SEQUENCE agent_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Property Type Table */
 CREATE TABLE PropertyType (
@@ -69,8 +66,7 @@ CONSTRAINT PK_PropertyType PRIMARY KEY (type_id)
 CREATE SEQUENCE propertytype_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Property Table */
 CREATE TABLE Property (
@@ -90,8 +86,7 @@ REFERENCES PropertyType(type_id)
 CREATE SEQUENCE property_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Feature Table */
 CREATE TABLE Feature (
@@ -104,8 +99,7 @@ CONSTRAINT PK_Feature PRIMARY KEY (feature_id)
 CREATE SEQUENCE feature_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Property-Feature Table */
 CREATE TABLE PropertyFeature (
@@ -122,8 +116,7 @@ REFERENCES Feature(feature_id)
 /* Picture Table */
 CREATE TABLE Picture (
 pic_id INTEGER NOT NULL,
-pic_img BLOB NOT NULL,
-pic_date DATE NOT NULL,
+pic_name VARCHAR(30) NOT NULL,
 property_id INTEGER NOT NULL,
 CONSTRAINT PK_Picture PRIMARY KEY (pic_id),
 CONSTRAINT FK_Picture_property FOREIGN KEY (property_id) 
@@ -133,8 +126,7 @@ REFERENCES Property(property_id)
 CREATE SEQUENCE picture_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Listing Table */
 CREATE TABLE Listing (
@@ -158,8 +150,7 @@ REFERENCES Agent(agent_id)
 CREATE SEQUENCE listing_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
 
 /* Sale Table */
 CREATE TABLE Sale (
@@ -175,5 +166,4 @@ REFERENCES Listing(listing_id)
 CREATE SEQUENCE sale_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1
-CACHE 10;
+INCREMENT BY 1;
