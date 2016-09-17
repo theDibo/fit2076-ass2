@@ -34,7 +34,7 @@ oci_execute($stmt);
 <body>
 
 <header>
-	<center><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></center>
+	<center><a href="index.php"><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></a></center>
 </header>
 
 <?php include("navbar.php"); ?>
@@ -53,7 +53,7 @@ oci_execute($stmt);
 			?>
   	  	
 	  	  	<!-- Create Property form -->
-	  	  	<form id="property-form" method="post" action="create_property.php" onsubmit="return validateForm(this)">
+	  	  	<form id="property-form" class="edit-form" method="post" action="create_property.php" onsubmit="return validateForm(this)">
 			<fieldset>
 			<table align="center" cellpadding="3">
 				<tr>

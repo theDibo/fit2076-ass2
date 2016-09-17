@@ -28,7 +28,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
 <body>
 
 <header>
-	<center><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></center>
+	<center><a href="index.php"><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></a></center>
 </header>
 
 <?php include("navbar.php"); ?>

@@ -1,2 +1,2 @@
-Property page
+Edit property page
 Remember to use oci_bind_by_name to prevent SQL injection

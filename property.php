@@ -29,7 +29,7 @@ oci_execute($stmt);
 <body>
 
 <header>
-	<center><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></center>
+	<center><a href="index.php"><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></a></center>
 </header>
 
 <?php include("navbar.php"); ?>
@@ -80,8 +80,8 @@ oci_execute($stmt);
 				<td><?php echo $row["PROPERTY_BEDROOMS"] ?></td>
 				<td><?php echo $row["PROPERTY_BATHROOMS"] ?></td>
 				<td><?php echo $row["PROPERTY_CARPARKS"] ?></td>
-				<td><a href="edit_property.php?propertyid=<?php echo $row["PROPERTY_ID"] ?>&Action=Update">Update</a></td>
-				<td><a href="edit_property.php?propertyid=<?php echo $row["PROPERTY_ID"] ?>&Action=Delete">Delete</a></td>
+				<td><a href="edit_property.php?id=<?php echo $row["PROPERTY_ID"] ?>&Action=Update">Update</a></td>
+				<td><a href="edit_property.php?id=<?php echo $row["PROPERTY_ID"] ?>&Action=Delete">Delete</a></td>
 			</tr>
 		<?php
 			}
