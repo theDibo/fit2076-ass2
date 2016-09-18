@@ -7,9 +7,20 @@ include("checklogin.php");
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-$query = "SELECT * FROM Property ORDER BY type_id";
-$stmt = oci_parse($conn, $query);
-oci_execute($stmt);
+
+// Select the property elements to display
+if (isset($_GET["search"]) && $_GET["search"] != "") {
+	// Something has been searched, get matching property records
+	$query = "SELECT * FROM Property WHERE lower(property_address) LIKE '%' || :search || '%'";
+	$stmt = oci_parse($conn, $query);
+	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
+	oci_execute($stmt);
+} else {
+	// Nothing has been searched, get all property records
+	$query = "SELECT * FROM Property ORDER BY type_id";
+	$stmt = oci_parse($conn, $query);
+	oci_execute($stmt);
+}
 
 ?>
 
@@ -28,6 +39,14 @@ oci_execute($stmt);
 </head>
 <body>
 
+<script language="javascript">
+	function search() {
+		// Refresh the page using the entered search value
+		searchval = $('#property-search').val();
+		window.location = 'property.php?search=' + searchval;
+	}
+</script>
+
 <header>
 	<center><a href="index.php"><img src="images/logo_full.png" alt="Ruthless Real Estate" id="top" /></a></center>
 </header>
@@ -45,7 +64,13 @@ oci_execute($stmt);
   	  <center><h1 class="page-title">Properties</h1></center>
   	  
   	  <div class="col-md-6 col-md-offset-2">
-	  <a href="create_property.php" class="btn btn-default btn-md col-md-5">Create New Property</a>
+	  <a href="create_property.php" class="btn btn-default btn-md col-md-5 custbutton">Create New Property</a>
+	  <div class="input-group input-right">
+      <input type="text" class="form-control" placeholder="Search for..." id="property-search">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="search()"><p class="button-icon"><span class="glyphicon glyphicon-search"></span></p></button>
+      </span>
+      </div>
 	  </div>
   	  
 	  	  <table border="1" align="center" class="display-table">

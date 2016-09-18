@@ -107,3 +107,10 @@ table {
 .edit-form {
 	margin-top: 100px;
 }
+
+.button-icon {
+	font-size: 12px;
+}
+.input-right {
+	margin-right: 50px;
+}
