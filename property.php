@@ -11,7 +11,7 @@ $conn = oci_connect($UName, $PWord, $DB)
 // Select the property elements to display
 if (isset($_GET["search"]) && $_GET["search"] != "") {
 	// Something has been searched, get matching property records
-	$query = "SELECT * FROM Property WHERE lower(property_address) LIKE '%' || :search || '%'";
+	$query = "SELECT Property.*, PropertyType.type_name FROM Property INNER JOIN PropertyType ON Property.type_id=PropertyType.type_id WHERE lower(Property.property_suburb) LIKE '%' || :search || '%' OR lower(PropertyType.type_name) LIKE '%' || :search || '%' ORDER BY Property.type_id";
 	$stmt = oci_parse($conn, $query);
 	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
 	oci_execute($stmt);
@@ -45,6 +45,15 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 		searchval = $('#property-search').val();
 		window.location = 'property.php?search=' + searchval;
 	}
+	
+	$(document).ready(function() {
+		$("#property-search").keypress(function(e) {
+			if(e.keyCode == 13){
+				$("#search-button").click();
+			}
+		});
+	});
+	
 </script>
 
 <header>
@@ -68,7 +77,7 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 	  <div class="input-group input-right">
       <input type="text" class="form-control" placeholder="Search for..." id="property-search">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onclick="search()"><p class="button-icon"><span class="glyphicon glyphicon-search"></span></p></button>
+        <button class="btn btn-default" type="button" onclick="search()" id="search-button"><p class="button-icon"><span class="glyphicon glyphicon-search"></span></p></button>
       </span>
       </div>
 	  </div>
