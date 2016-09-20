@@ -44,8 +44,14 @@ oci_execute($stmt);
   	  
   	  <center><h1 class="page-title">Buyers</h1></center>
   	  
+<<<<<<< HEAD
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_buyer.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
+=======
+ 	  <div class="col-md-6 col-md-offset-2">
+	  <a href="create_buyer.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
+	  <div class="input-group input-right">
+>>>>>>> images
 	  </div>
   	  
 	  	  <table border="1" align="center" class="display-table">
@@ -87,9 +93,15 @@ oci_execute($stmt);
 
 		</table>
 		</div>
+<<<<<<< HEAD
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
 		</div>
+=======
+	</div>
+	<div class="col-sm-2 sidenav">
+	  <!-- Blank for spacing -->
+>>>>>>> images
 	</div>
 </div>
 
