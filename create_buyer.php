@@ -136,6 +136,10 @@ $conn = oci_connect($UName, $PWord, $DB)
 				}
 			?>
 		</div>
+        <?php
+            oci_free_statement($stmt);
+            oci_close($conn);
+        ?>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
 		</div>
@@ -147,7 +151,3 @@ $conn = oci_connect($UName, $PWord, $DB)
 </body>
 </html>
 
-<?php
-	oci_free_statement($stmt);
-	oci_close($conn);
-?>

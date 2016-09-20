@@ -10,10 +10,6 @@ include("connection.php");
 // Connect to the Oracle database
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Unable to login to database.");
-	
-$query = "SELECT * FROM Seller";
-$stmt = oci_parse($conn, $query);
-oci_execute($stmt);
 ?>
 <html lang="en">
 <head>
@@ -139,6 +135,10 @@ oci_execute($stmt);
 				}
 			?>
 		</div>
+        <?php
+            oci_free_statement($stmt);
+            oci_close($conn);
+        ?>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
 		</div>
@@ -149,8 +149,3 @@ oci_execute($stmt);
 
 </body>
 </html>
-
-<?php
-	oci_free_statement($stmt);
-	oci_close($conn);
-?>

@@ -7,9 +7,21 @@ include("checklogin.php");
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-$query = "SELECT * FROM Seller ORDER BY SELLER_ID";
-$stmt = oci_parse($conn, $query);
-oci_execute($stmt);
+
+if (isset($_GET["search"]) && $_GET["search"] != "") {
+	// Something has been searched, get matching property records
+	$query = "SELECT* FROM SELLER WHERE lower(SELLER_FNAME) LIKE '%' || :search || '%' OR lower(SELLER_LNAME) LIKE '%' || :search || '%' OR lower(SELLER_ADDRESS) LIKE '%' || :search || '%' OR lower(SELLER_SUBURB) LIKE '%' || :search || '%' OR lower(SELLER_STATE) LIKE '%' || :search || '%' ORDER BY SELLER_ID";
+	$stmt = oci_parse($conn, $query);
+	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
+	oci_execute($stmt);
+} else {
+	// Nothing has been searched, get all property records
+	$query = "SELECT * FROM Seller ORDER BY SELLER_ID";
+    $stmt = oci_parse($conn, $query);
+    oci_execute($stmt);
+}
+
+
 
 ?>
 
