@@ -136,7 +136,6 @@ property_id INTEGER NOT NULL,
 listing_desc VARCHAR(1000),
 listing_date DATE NOT NULL,
 listing_price INTEGER NOT NULL,
-listing_status CHAR(1) NOT NULL,
 agent_id INTEGER NOT NULL,
 CONSTRAINT PK_Listing PRIMARY KEY (listing_id),
 CONSTRAINT FK_Listing_seller FOREIGN KEY (seller_id) 
