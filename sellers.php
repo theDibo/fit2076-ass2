@@ -59,6 +59,10 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_seller.php" class="btn btn-default btn-md col-md-5">Create New Seller</a>
 	  </div>
+            
+        <div class="col-md-6 col-md-offset-2">
+	  <a href="sellers_email.php" class="btn btn-default btn-md col-md-5">Email subscribed mailers</a>
+	  </div>
   	  
 	  	  <table border="1" align="center" class="display-table">
 	
