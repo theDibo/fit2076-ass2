@@ -10,12 +10,6 @@ include("connection.php");
 // Connect to the Oracle database
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Unable to login to database.");
-<<<<<<< HEAD
-	
-=======
-
-
->>>>>>> images
 ?>
 <html lang="en">
 <head>

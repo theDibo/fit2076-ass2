@@ -93,6 +93,14 @@ oci_execute($stmt);
 					<td><input type="number" name="carparks" min="0" value="0" required></td>
 				</tr>
 			</table><br />
+			
+			<h2>Listing Details</h2>
+			<table align="center" cellpadding="3">
+				<tr>
+					<b><label for="Description">Description</label></b>
+				</tr>
+			</table>
+			
 			</fieldset>
 			
 			<table align="center">

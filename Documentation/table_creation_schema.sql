@@ -1,3 +1,21 @@
+/* Delete all existing tables and sequences */
+DROP SEQUENCE buyer_seq;
+DROP SEQUENCE feature_seq;
+DROP SEQUENCE listing_seq;
+DROP SEQUENCE picture_seq;
+DROP SEQUENCE property_seq;
+DROP SEQUENCE propertytype_seq;
+DROP SEQUENCE seller_seq;
+
+DROP TABLE Listing;
+DROP TABLE Picture;
+DROP TABLE PropertyFeature;
+DROP TABLE Feature;
+DROP TABLE Property;
+DROP TABLE PropertyType;
+DROP TABLE Buyer;
+DROP TABLE Seller;
+
 /* Seller Table */
 CREATE TABLE Seller (
 seller_id INTEGER NOT NULL,
@@ -40,21 +58,6 @@ MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
 
-/* Agent Table */
-CREATE TABLE Agent (
-agent_id INTEGER NOT NULL,
-agent_fname VARCHAR(20) NOT NULL,
-agent_lname VARCHAR(20) NOT NULL,
-agent_phone CHAR(10) NOT NULL,
-agent_email VARCHAR(60) NOT NULL,
-CONSTRAINT PK_Agent PRIMARY KEY (agent_id)
-);
-
-CREATE SEQUENCE agent_seq
-MINVALUE 1
-START WITH 1
-INCREMENT BY 1;
-
 /* Property Type Table */
 CREATE TABLE PropertyType (
 type_id INTEGER NOT NULL,
@@ -74,10 +77,9 @@ property_id INTEGER NOT NULL,
 property_address VARCHAR(50) NOT NULL,
 property_suburb VARCHAR(30) NOT NULL,
 type_id INTEGER NOT NULL,
-prop_bedrooms INTEGER NOT NULL,
-prop_bathrooms INTEGER NOT NULL,
-prop_carparks INTEGER NOT NULL,
-prop_status CHAR(1) NOT NULL,
+property_bedrooms INTEGER NOT NULL,
+property_bathrooms INTEGER NOT NULL,
+property_carparks INTEGER NOT NULL,
 CONSTRAINT PK_Property PRIMARY KEY (property_id),
 CONSTRAINT FK_Property_type FOREIGN KEY (type_id) 
 REFERENCES PropertyType(type_id)
@@ -103,11 +105,11 @@ INCREMENT BY 1;
 
 /* Property-Feature Table */
 CREATE TABLE PropertyFeature (
-prop_id INTEGER NOT NULL,
+property_id INTEGER NOT NULL,
 feature_id INTEGER NOT NULL,
 quantity INTEGER NOT NULL,
-CONSTRAINT PK_PropertyFeature PRIMARY KEY (prop_id, feature_id),
-CONSTRAINT FK_PropertyFeature_property FOREIGN KEY (prop_id) 
+CONSTRAINT PK_PropertyFeature PRIMARY KEY (property_id, feature_id),
+CONSTRAINT FK_PropertyFeature_property FOREIGN KEY (property_id) 
 REFERENCES Property(property_id),
 CONSTRAINT FK_PropertyFeature_feature FOREIGN KEY (feature_id) 
 REFERENCES Feature(feature_id)
@@ -136,33 +138,16 @@ property_id INTEGER NOT NULL,
 listing_desc VARCHAR(1000),
 listing_date DATE NOT NULL,
 listing_price INTEGER NOT NULL,
-agent_id INTEGER NOT NULL,
+sale_date DATE,
+sale_price INTEGER,
 CONSTRAINT PK_Listing PRIMARY KEY (listing_id),
 CONSTRAINT FK_Listing_seller FOREIGN KEY (seller_id) 
 REFERENCES Seller(seller_id),
 CONSTRAINT FK_Listing_property FOREIGN KEY (property_id) 
-REFERENCES Property(property_id),
-CONSTRAINT FK_Listing_agent FOREIGN KEY (agent_id) 
-REFERENCES Agent(agent_id)
+REFERENCES Property(property_id)
 );
 
 CREATE SEQUENCE listing_seq
-MINVALUE 1
-START WITH 1
-INCREMENT BY 1;
-
-/* Sale Table */
-CREATE TABLE Sale (
-sale_id INTEGER NOT NULL,
-listing_id INTEGER NOT NULL,
-sale_price INTEGER NOT NULL,
-sale_date DATE NOT NULL,
-CONSTRAINT PK_Sale PRIMARY KEY (sale_id),
-CONSTRAINT FK_Sale_listing FOREIGN KEY (listing_id) 
-REFERENCES Listing(listing_id)
-);
-
-CREATE SEQUENCE sale_seq
 MINVALUE 1
 START WITH 1
 INCREMENT BY 1;
