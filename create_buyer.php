@@ -11,7 +11,6 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Unable to login to database.");
 
-
 ?>
 <html lang="en">
 <head>
