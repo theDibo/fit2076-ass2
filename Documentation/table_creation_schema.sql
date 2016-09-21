@@ -35,7 +35,8 @@ CONSTRAINT BOOL_Seller CHECK (seller_mailing in ('Y', 'N'))
 CREATE SEQUENCE seller_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Buyer Table */
 CREATE TABLE Buyer (
@@ -56,7 +57,8 @@ CONSTRAINT BOOL_Buyer CHECK (buyer_mailing in ('Y', 'N'))
 CREATE SEQUENCE buyer_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Property Type Table */
 CREATE TABLE PropertyType (
@@ -69,7 +71,8 @@ CONSTRAINT PK_PropertyType PRIMARY KEY (type_id)
 CREATE SEQUENCE propertytype_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Property Table */
 CREATE TABLE Property (
@@ -88,7 +91,8 @@ REFERENCES PropertyType(type_id)
 CREATE SEQUENCE property_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Feature Table */
 CREATE TABLE Feature (
@@ -101,7 +105,8 @@ CONSTRAINT PK_Feature PRIMARY KEY (feature_id)
 CREATE SEQUENCE feature_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Property-Feature Table */
 CREATE TABLE PropertyFeature (
@@ -128,7 +133,8 @@ REFERENCES Property(property_id)
 CREATE SEQUENCE picture_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;
 
 /* Listing Table */
 CREATE TABLE Listing (
@@ -150,4 +156,5 @@ REFERENCES Property(property_id)
 CREATE SEQUENCE listing_seq
 MINVALUE 1
 START WITH 1
-INCREMENT BY 1;
+INCREMENT BY 1
+NOCACHE;

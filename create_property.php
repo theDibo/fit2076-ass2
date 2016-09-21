@@ -97,7 +97,37 @@ oci_execute($stmt);
 			<h2>Listing Details</h2>
 			<table align="center" cellpadding="3">
 				<tr>
-					<b><label for="Description">Description</label></b>
+					<td><b><label for="description">Description</label></b></td>
+					<td><textarea name="description"></textarea></td>
+				</tr>
+				<tr>
+					<td><b><label for="ldate">Listing Date</label></b></td>
+					<td><input type="date" name="ldate" min="<?php echo date("Y-m-d"); ?>" required /></td>
+				</tr>
+				<tr>
+					<td><b><label for="seller">Seller</label></b></td>
+					<td><select name="seller">
+						<?php
+						// Select all Seller records
+						$query = "SELECT * FROM Seller ORDER BY seller_lname";
+						$stmt = oci_parse($conn, $query);
+						oci_execute($stmt);	
+					
+						while ($row = oci_fetch_array($stmt)) {
+						?>
+
+							<option value="<?php echo $row["SELLER_ID"]; ?>">
+							<?php echo $row["SELLER_FNAME"]." ".$row["SELLER_LNAME"]; ?>
+							</option>
+
+						<?php	
+						}
+						?>
+					</select></td>
+				</tr>
+				<tr>
+					<td><b><label for="price">Price</label></b></td>
+					<td><input type="number" name="price" min="0" required /></td>
 				</tr>
 			</table>
 			
@@ -129,11 +159,27 @@ oci_execute($stmt);
 					oci_bind_by_name($stmt, ":carparks", $_POST["carparks"]);
 					
 					if (@oci_execute($stmt)) {
-						// If the insert was successful
-						echo "<p>";
-						echo "The property at address '".$_POST["address"]."' was successfully created.";
-						echo "</p>";
-						echo "<p><a href='property.php'>Return to Property Page</a></p>";
+						// If the insert was successful, create the listing
+
+						$query = "INSERT INTO Listing (listing_id, seller_id, property_id, listing_desc, listing_date, listing_price) VALUES (listing_seq.nextval, ".$_POST["seller"].", property_seq.currval, :description, to_date('".$_POST["ldate"]."','yyyy-mm-dd'), :price)";
+						$stmt = oci_parse($conn, $query);
+						oci_bind_by_name($stmt, ":description", $_POST["description"]);
+						oci_bind_by_name($stmt, ":price", $_POST["price"]);
+						
+						if (@oci_execute($stmt)) {
+							
+							// Listing creation was sucessful
+							echo "<p>";
+							echo "The property at address '".$_POST["address"]."' was successfully created.";
+							echo "</p>";
+							echo "<p><a href='property.php'>Return to Property Page</a></p>";
+						} else {
+							echo "<p>";
+							echo "Error: listing could not be created.";
+							echo "</p>";
+							echo "<p><a href='property.php'>Return to Property Page</a></p>";
+						}
+						
 					} else {
 						// If the insert failed
 						echo "<p>";
