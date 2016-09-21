@@ -82,8 +82,7 @@ oci_execute($stmt);
         
         $msg =  $_POST["message"];
       $subject = $_POST["subject"];
-      if(mail($to, $subject, $msg, $from))
-      {
+      if(mail($to, $subject, $msg, $from)){
         echo "Mail Sent";
       }
       else
