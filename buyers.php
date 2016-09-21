@@ -46,7 +46,7 @@ oci_execute($stmt);
 	  </div>
             
         <div class="col-md-6 col-md-offset-2">
-	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
+	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Email Buyers</a>
 	  </div>
   	  
 	  	  <table border="1" align="center" class="display-table">

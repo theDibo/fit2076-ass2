@@ -57,7 +57,7 @@ $row = oci_fetch_array($stmt);
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
 
-		  <center><h1 class="page-title">Edit buyer</h1></center>
+		  <center><h1 class="page-title">Edit BUYER</h1></center>
 		  
 			<?php
 			switch($_GET["Action"]) {
@@ -67,48 +67,48 @@ $row = oci_fetch_array($stmt);
 				
 			?>
 			
-			<form id="buyer-form" class="edit-form" method="post" action="edit_buyer.php?id=<?php echo $_GET["id"]; ?>&Action=ConfirmUpdate" onsubmit="return validateForm(this)">
+			<form id="buyer-form" class="edit-form" method="post" action="edit_BUYER.php?id=<?php echo $_GET["id"]; ?>&Action=ConfirmUpdate" onsubmit="return validateForm(this)">
 			<fieldset>
 			<table align="center" cellpadding="3">
 				<tr>
 					<td><b>ID</b></td>
-					<td><?php echo $row["buyer_ID"]; ?></td>
+					<td><?php echo $row["BUYER_ID"]; ?></td>
 				</tr>
 				<tr>
 					<td><b><label for="fname">First name</label></b></td>
-					<td><input type="text" name="fname" size="20" value="<?php echo $row["buyer_FNAME"]; ?>" required></td>
+					<td><input type="text" name="fname" size="20" value="<?php echo $row["BUYER_FNAME"]; ?>" required></td>
 				</tr>
 				<tr>
 					<td><b><label for="lname">Last name</label></b></td>
-					<td><input type="text" name="lname" size="20" value="<?php echo $row["buyer_LNAME"]; ?>" required></td>
+					<td><input type="text" name="lname" size="20" value="<?php echo $row["BUYER_LNAME"]; ?>" required></td>
 				</tr>
                 <tr>
 					<td><b><label for="address">Address</label></b></td>
-					<td><input type="text" name="address" size="50" value="<?php echo $row["buyer_ADDRESS"]; ?>" required></td>
+					<td><input type="text" name="address" size="50" value="<?php echo $row["BUYER_ADDRESS"]; ?>" required></td>
 				</tr>
                 <tr>
 					<td><b><label for="suburb">Suburb</label></b></td>
-					<td><input type="text" name="suburb" size="30" value="<?php echo $row["buyer_SUBURB"]; ?>" required></td>
+					<td><input type="text" name="suburb" size="30" value="<?php echo $row["BUYER_SUBURB"]; ?>" required></td>
 				</tr>
                 <tr>
 					<td><b><label for="state">State</label></b></td>
-					<td><input type="text" name="state" size="3" value="<?php echo $row["buyer_STATE"]; ?>" required></td>
+					<td><input type="text" name="state" size="3" value="<?php echo $row["BUYER_STATE"]; ?>" required></td>
 				</tr>
                 <tr>
 					<td><b><label for="phone">phone</label></b></td>
-					<td><input type="text" name="phone" size="10" value="<?php echo $row["buyer_PHONE"]; ?>" ></td>
+					<td><input type="text" name="phone" size="10" value="<?php echo $row["BUYER_PHONE"]; ?>" ></td>
 				</tr>
                 <tr>
 					<td><b><label for="mobile">mobile</label></b></td>
-					<td><input type="text" name="mobile" size="10" value="<?php echo $row["buyer_MOBILE"]; ?>" ></td>
-				</tr>wa
-                <tr>
-					<td><b><label for="email">email</label></b></td>
-					<td><input type="text" name="email" size="60" value="<?php echo $row["buyer_EMAIL"]; ?>" required></td>
+					<td><input type="text" name="mobile" size="10" value="<?php echo $row["BUYER_MOBILE"]; ?>" ></td>
 				</tr>
                 <tr>
-					<td><b><label for="mailinglist">Mailing</label></b></td>
-					<td><input type="text" name="mailinglist" size="1" value="<?php echo $row["buyer_MAILING"]; ?>" required></td>
+					<td><b><label for="email">email</label></b></td>
+					<td><input type="text" name="email" size="60" value="<?php echo $row["BUYER_EMAIL"]; ?>" required></td>
+				</tr>
+                <tr>
+					<td><b><label for="mailinglist">Mailing list</label></b></td>
+					<td><input type="checkbox" name="mailinglist" value = "Yes"></td>
 				</tr>
 			
 			</table><br />
@@ -116,8 +116,8 @@ $row = oci_fetch_array($stmt);
 			
 			<table align="center">
 				<tr>
-					<td><input type="submit" value="Update buyer"></td>
-					<td><input type="button" value="Cancel" onclick="window.location='buyer.php'"></td>
+					<td><input type="submit" value="Update BUYER"></td>
+					<td><input type="button" value="Cancel" onclick="window.location='buyers.php'"></td>
 				</tr>
 			</table>
 			
@@ -134,8 +134,17 @@ $row = oci_fetch_array($stmt);
 		
 			// Confirm Update Case
 			case "ConfirmUpdate":
+                
+            if(isset($_POST['mailinglist']) &&  $_POST['mailinglist'] == 'Yes') 
+            {
+                $mail = 'Y';
+            }
+            else
+            {
+                $mail = 'N';
+            } 
 					
-			$query = "UPDATE buyer set buyer_FNAME = :fname, buyer_LNAME :lname, buyer_ADDRESS = :address, buyer_SUBURB :suburb, buyer_STATE = :state, buyer_PHONE = :phone, buyer_MOBILE = :mobile, buyer_EMAIL = :email, buyer_MAILING = :mailinglist WHERE buyer_ID=".$_GET["id"];
+			$query = "UPDATE BUYER set BUYER_FNAME = :fname, BUYER_LNAME = :lname, BUYER_ADDRESS = :address, BUYER_SUBURB = :suburb, BUYER_STATE = :state, BUYER_PHONE = :phone, BUYER_MOBILE = :mobile, BUYER_EMAIL = :email, BUYER_MAILING = '$mail' WHERE BUYER_ID= ".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
 			oci_bind_by_name($stmt, ":fname", $_POST["fname"]);
             oci_bind_by_name($stmt, ":lname", $_POST["lname"]);
@@ -145,19 +154,18 @@ $row = oci_fetch_array($stmt);
             oci_bind_by_name($stmt, ":phone", $_POST["phone"]);
             oci_bind_by_name($stmt, ":mobile", $_POST["mobile"]);
             oci_bind_by_name($stmt, ":email", $_POST["email"]);
-            oci_bind_by_name($stmt, ":mailinglist", $_POST["mailinglist"]);
 					
 			if (@oci_execute($stmt)) {
 				
 				// If edit was successful
 				echo "Update was successful.";
-				echo "<center><input type='button' value='Return' OnClick='window.location=\"buyer.php\"'></center>";
+				echo "<center><input type='button' value='Return' OnClick='window.location=\"buyers.php\"'></center>";
 				
 			} else {
 				
 				// If edit failed
 				echo "<p>There was an error updating the selected record.</p><br />";
-				echo "<center><input type='button' value='Return to List' OnClick='window.location=\"buyer.php\"'></center>";
+				echo "<center><input type='button' value='Return to List' OnClick='window.location=\"buyers.php\"'></center>";
 				
 			}
 					
@@ -171,50 +179,50 @@ $row = oci_fetch_array($stmt);
 			<table align="center" cellpadding="3">
 				<tr>
 					<td><b>ID</b></td>
-					<td><?php echo $row["buyer_ID"]; ?></td>
+					<td><?php echo $row["BUYER_ID"]; ?></td>
 				</tr>
 				<tr>
 					<td><b>First name</b></td>
-					<td><?php echo $row["buyer_FNAME"]; ?></td>
+					<td><?php echo $row["BUYER_FNAME"]; ?></td>
 				</tr>
 				<tr>
 					<td><b>Last name</b></td>
-					<td><?php echo $row["buyer_LNAME"]; ?></td>
+					<td><?php echo $row["BUYER_LNAME"]; ?></td>
 				</tr>
 				<tr>
 					<td><b>Address</b></td>
-					<td><?php echo $row["buyer_ADDRESS"]; ?></td>
+					<td><?php echo $row["BUYER_ADDRESS"]; ?></td>
 				</tr>
 				<tr>
 					<td><b>Suburb</b></td>
-					<td><?php echo $row["buyer_SUBURB"]; ?></td>
+					<td><?php echo $row["BUYER_SUBURB"]; ?></td>
 				</tr>
 				<tr>
 					<td><b>State</b></td>
-					<td><?php echo $row["buyer_STATE"]; ?></td>
+					<td><?php echo $row["BUYER_STATE"]; ?></td>
 				</tr>
                 <tr>
 					<td><b>Phone</b></td>
-					<td><?php echo $row["buyer_PHONE"]; ?></td>
+					<td><?php echo $row["BUYER_PHONE"]; ?></td>
 				</tr>
                 <tr>
 					<td><b>Mobile</b></td>
-					<td><?php echo $row["buyer_MOBILE"]; ?></td>
+					<td><?php echo $row["BUYER_MOBILE"]; ?></td>
 				</tr>
                 <tr>
 					<td><b>Email</b></td>
-					<td><?php echo $row["buyer_EMAIL"]; ?></td>
+					<td><?php echo $row["BUYER_EMAIL"]; ?></td>
 				</tr>
                 <tr>
 					<td><b>Mailing List</b></td>
-					<td><?php echo $row["buyer_MAILING"]; ?></td>
+					<td><?php echo $row["BUYER_MAILING"]; ?></td>
 				</tr>
 			</table><br />
 			
 			<table align="center">
 				<tr>
 					<td><input type="button" value="Delete buyer" onclick="confirm_delete()"></td>
-					<td><input type="button" value="Cancel" onclick="window.location='buyer.php'"></td>
+					<td><input type="button" value="Cancel" onclick="window.location='BUYERS.php'"></td>
 				</tr>
 			</table>
 			
@@ -225,7 +233,7 @@ $row = oci_fetch_array($stmt);
 			// Confirm Delete Case
 			case "ConfirmDelete":
 			
-			$query = "DELETE FROM buyer WHERE buyer_ID=".$_GET["id"];
+			$query = "DELETE FROM BUYER WHERE BUYER_ID=".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
 			//echo $query;
 			// Check that the delete happens successfully
@@ -236,35 +244,35 @@ $row = oci_fetch_array($stmt);
 				<table align="center" cellpadding="3">
 				<tr>
 					<td><b>ID</b></td>
-					<td><?php echo $row["buyer_ID"] ?></td>
+					<td><?php echo $row["BUYER_ID"] ?></td>
 				</tr>
 				<tr>
 					<td><b>First name</b></td>
-					<td><?php echo $row["buyer_FNAME"] ?></td>
+					<td><?php echo $row["BUYER_FNAME"] ?></td>
 				</tr>
 				<tr>
 					<td><b>Last name</b></td>
-					<td><?php echo $row["buyer_LNAME"] ?></td>
+					<td><?php echo $row["BUYER_LNAME"] ?></td>
 				</tr>
 				<tr>
 					<td><b>Address</b></td>
-					<td><?php echo $ptype["buyer_ADDRESS"] ?></td>
+					<td><?php echo $ptype["BUYER_ADDRESS"] ?></td>
 				</tr>
 				<tr>
 					<td><b>Suburb</b></td>
-					<td><?php echo $row["buyer_SUBURB"] ?></td>
+					<td><?php echo $row["BUYER_SUBURB"] ?></td>
 				</tr>
 				<tr>
 					<td><b>State</b></td>
-					<td><?php echo $row["buyer_STATE"] ?></td>
+					<td><?php echo $row["BUYER_STATE"] ?></td>
 				</tr>
 			</table>
 			<?php
 		} else {
-			echo "<center>Error deleting buyer. Check that no listings use the buyer.";
+			echo "<center>Error deleting BUYER. Check that no listings use the BUYER.";
 		} 
 		echo "<center><input type='button' value='Return to List'
-OnClick='window.location=\"buyer.php\"'>
+OnClick='window.location=\"buyers.php\"'>
 </center>"; 
 			
 			break;
