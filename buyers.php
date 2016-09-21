@@ -1,16 +1,13 @@
 <?php 
 // Start output buffering
 ob_start();
-
 include("checklogin.php");
-
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 $query = "SELECT * FROM BUYER ORDER BY BUYER_ID";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
-
 ?>
 
 <html lang="en">
@@ -46,6 +43,10 @@ oci_execute($stmt);
   	  
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_buyer.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
+	  </div>
+            
+        <div class="col-md-6 col-md-offset-2">
+	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
 	  </div>
   	  
 	  	  <table border="1" align="center" class="display-table">
