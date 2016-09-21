@@ -42,6 +42,7 @@ oci_execute($stmt);
 		</div>
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
+	  <h1 class="page-title">Send Mail to Buyers</h1>
   <?php
     if (!isset($_POST["subject"]))
     {

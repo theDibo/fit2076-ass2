@@ -42,6 +42,7 @@ oci_execute($stmt);
 		</div>
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
+	  <h1 class="page-title">Send Mail to Sellers</h1>
   <?php
     if (!isset($_POST["subject"]))
     {
@@ -57,8 +58,7 @@ oci_execute($stmt);
         <tr>
           <td>Message</td>
           <td valign="top" align="left">
-            <textarea cols="68" name="message" rows="10">
-              </textarea>
+            <textarea cols="68" name="message" rows="10"></textarea>
           </td>
         </tr>
         <tr>

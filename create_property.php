@@ -98,7 +98,7 @@ oci_execute($stmt);
 			<table align="center" cellpadding="3">
 				<tr>
 					<td><b><label for="description">Description</label></b></td>
-					<td><textarea name="description"></textarea></td>
+					<td><textarea name="description" cols="68" rows="10"></textarea></td>
 				</tr>
 				<tr>
 					<td><b><label for="ldate">Listing Date</label></b></td>
