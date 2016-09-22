@@ -8,7 +8,7 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-$query = "SELECT * FROM PropertyType ORDER BY type_ID";
+$query = "SELECT * FROM PropertyType ORDER BY type_id";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 
@@ -25,6 +25,8 @@ oci_execute($stmt);
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/jquery.validate.js"></script>
+  <script src="js/additional-methods.js"></script>
 
 </head>
 <body>
@@ -41,26 +43,24 @@ oci_execute($stmt);
 		  <!-- Blank for spacing -->
 		</div>
 		<div class="col-sm-8 text-left content-div">
-	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
-  	  
-  	  <center><h1 class="page-title">Property Type</h1></center>
-  	  
-  	  <div class="col-md-6 col-md-offset-2">
-	  <a href="create_type.php" class="btn btn-default btn-md col-md-5">Create New Type</a>
-	  </div>
-  	  
+	  	<!-- ALL CONTENT GOES INSIDE THIS DIV -->
+	  	  <center><h1 class="page-title">Property Types</h1></center>
+	  	  
+	  	  <div class="col-md-6 col-md-offset-2">
+		  <a href="create_type.php" class="btn btn-default btn-md col-md-5 custbutton">Create New Type</a>
+		  </div>
+	  	  
 	  	  <table border="1" align="center" class="display-table">
 	
 			<tr>
-	           <th>ID</th>
+	        	<th>ID</th>
 				<th>Name</th>
 				<th>Description</th>
-
 				<th colspan="2">Options</th>
 			</tr>
 
 			<?php
-				while ($row = oci_fetch_array($stmt)) {
+			while ($row = oci_fetch_array($stmt)) {
 			?>
 			<tr>
 				<td><?php echo $row["TYPE_ID"] ?></td>
@@ -74,6 +74,7 @@ oci_execute($stmt);
 		?>
 
 		</table>
+	  	  
 		</div>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
@@ -85,6 +86,7 @@ oci_execute($stmt);
 
 </body>
 </html>
+
 
 <?php
 	oci_free_statement($stmt);

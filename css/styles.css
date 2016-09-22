@@ -90,6 +90,7 @@ table {
 	border: 2px solid #0A1612;
 	position: relative;
 	top: 50px;
+	min-width: 650px;
 }
 
 .display-table td, th {
