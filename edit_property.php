@@ -16,6 +16,18 @@ $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 $row = oci_fetch_array($stmt);
 
+// Select the listing to edit
+$query = "SELECT * FROM Listing WHERE property_id = ".$_GET["id"];
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
+$listing = oci_fetch_array($stmt);
+
+// Select the seller
+$query = "SELECT * FROM Seller WHERE seller_id = ".$listing["SELLER_ID"];
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
+$seller = oci_fetch_array($stmt);
+
 // Select the current PropertyType record
 $query = "SELECT * FROM PropertyType WHERE type_id=".$row["TYPE_ID"];
 $stmt = oci_parse($conn, $query);
@@ -78,7 +90,7 @@ oci_execute($stmt);
 			
 			<form id="property-form" class="edit-form" method="post" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=ConfirmUpdate" onsubmit="return validateForm(this)">
 			<fieldset>
-			<table align="center" cellpadding="3">
+			<table align="center" cellpadding="3" class="edit-table">
 				<tr>
 					<td><b>ID</b></td>
 					<td><?php echo $row["PROPERTY_ID"]; ?></td>
@@ -122,6 +134,40 @@ oci_execute($stmt);
 					<td><input type="number" name="carparks" min="0" value="<?php echo $row["PROPERTY_CARPARKS"]; ?>" required></td>
 				</tr>
 			</table><br />
+			
+			<h2>Listing Details</h2>
+			<table align="center" cellpadding="3" class="edit-table">
+				<tr>
+					<td><b><label for="description">Description</label></b></td>
+					<td><textarea name="description" cols="68" rows="10"><?php echo $listing["LISTING_DESC"]; ?></textarea></td>
+				</tr>
+				<tr>
+					<td><b><label for="seller">Seller</label></b></td>
+					<td><select name="seller">
+						<?php
+						// Select all Seller records
+						$query = "SELECT * FROM Seller ORDER BY seller_lname";
+						$stmt = oci_parse($conn, $query);
+						oci_execute($stmt);	
+					
+						while ($row = oci_fetch_array($stmt)) {
+						?>
+
+							<option value="<?php echo $row["SELLER_ID"]; ?>" <?php echo getselect($seller["SELLER_ID"], $row["SELLER_ID"]); ?>>
+							<?php echo $row["SELLER_FNAME"]." ".$row["SELLER_LNAME"]; ?>
+							</option>
+
+						<?php	
+						}
+						?>
+					</select></td>
+				</tr>
+				<tr>
+					<td><b><label for="price">Price</label></b></td>
+					<td>$<input type="number" name="price" min="0" value="<?php echo $listing["LISTING_PRICE"]; ?>" required /></td>
+				</tr>
+			</table>
+			
 			</fieldset>
 			
 			<table align="center">
@@ -145,7 +191,7 @@ oci_execute($stmt);
 			// Confirm Update Case
 			case "ConfirmUpdate":
 					
-			$query = "UPDATE Property set property_address=:address, property_suburb=:suburb, type_id = :type, property_bedrooms = :bedrooms, property_bathrooms = :bathrooms, property_carparks = :carparks WHERE property_id=".$_GET["id"];
+			$query = "UPDATE Property SET property_address=:address, property_suburb=:suburb, type_id = :type, property_bedrooms = :bedrooms, property_bathrooms = :bathrooms, property_carparks = :carparks WHERE property_id=".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
 			oci_bind_by_name($stmt, ":address", $_POST["address"]);
 			oci_bind_by_name($stmt, ":suburb", $_POST["suburb"]);
@@ -156,9 +202,25 @@ oci_execute($stmt);
 					
 			if (@oci_execute($stmt)) {
 				
-				// If edit was successful
-				echo "Update was successful.";
-				echo "<center><input type='button' value='Return' OnClick='window.location=\"property.php\"'></center>";
+				// Update Listing
+				$query = "UPDATE Listing SET seller_id=".$_POST["seller"].", listing_desc=:description, listing_price=:price WHERE listing_id=".$listing["LISTING_ID"];
+				$stmt = oci_parse($conn, $query);
+				oci_bind_by_name($stmt, ":description", $_POST["description"]);
+				oci_bind_by_name($stmt, ":price", $_POST["price"]);
+				
+				if (@oci_execute($stmt)) {
+					
+					// If edit was successful
+					echo "Update was successful.";
+					echo "<center><input type='button' value='Return' OnClick='window.location=\"property.php\"'></center>";
+					
+				} else {
+					
+					// If edit failed
+					echo "<p>There was an error updating the selected listing.</p><br />";
+					echo "<center><input type='button' value='Return to List' OnClick='window.location=\"property.php\"'></center>";
+					
+				}
 				
 			} else {
 				
@@ -175,7 +237,7 @@ oci_execute($stmt);
 					
 			?>
 			
-			<table align="center" cellpadding="3">
+			<table align="center" cellpadding="3" class="edit-table">
 				<tr>
 					<td><b>ID</b></td>
 					<td><?php echo $row["PROPERTY_ID"]; ?></td>
@@ -206,6 +268,26 @@ oci_execute($stmt);
 				</tr>
 			</table><br />
 			
+			<h2>Listing Details</h2>
+			<table align="center" cellpadding="3" class="edit-table">
+				<tr>
+					<td><b>ID</b></td>
+					<td><?php echo $listing["LISTING_ID"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Seller</b></td>
+					<td><?php echo $seller["SELLER_FNAME"]." ".$seller["SELLER_LNAME"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Description</b></td>
+					<td><?php echo $listing["LISTING_DESC"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Price</b></td>
+					<td><?php echo "$ ".$listing["LISTING_PRICE"]; ?></td>
+				</tr>
+			</table><br />
+			
 			<table align="center">
 				<tr>
 					<td><input type="button" value="Delete Property" onclick="confirm_delete()"></td>
@@ -220,51 +302,78 @@ oci_execute($stmt);
 			// Confirm Delete Case
 			case "ConfirmDelete":
 			
-			$query = "DELETE FROM Property WHERE property_id=".$_GET["id"];
+			// Delete the listing
+			$query = "DELETE FROM Listing WHERE listing_id=".$listing["LISTING_ID"];
 			$stmt = oci_parse($conn, $query);
-			//echo $query;
+			
 			// Check that the delete happens successfully
 			if (@oci_execute($stmt)) {
-				?>
-				<center><p>Successfully deleted the following record: </p></center>
-				<br />
-				<table align="center" cellpadding="3">
-				<tr>
-					<td><b>ID</b></td>
-					<td><?php echo $row["PROPERTY_ID"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Address</b></td>
-					<td><?php echo $row["PROPERTY_ADDRESS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Suburb</b></td>
-					<td><?php echo $row["PROPERTY_SUBURB"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Type</b></td>
-					<td><?php echo $ptype["TYPE_NAME"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Bedrooms</b></td>
-					<td><?php echo $row["PROPERTY_BEDROOMS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Bathrooms</b></td>
-					<td><?php echo $row["PROPERTY_BATHROOMS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Car Parks</b></td>
-					<td><?php echo $row["PROPERTY_CARPARKS"] ?></td>
-				</tr>
-			</table>
+				// Delete the listing
+				$query = "DELETE FROM Property WHERE property_id=".$_GET["id"];
+				$stmt = oci_parse($conn, $query);
+				if (@oci_execute($stmt)) {
+					?>
+					<center><p>Successfully deleted the following record: </p></center>
+					<br />
+					<table align="center" cellpadding="3" class="edit-table">
+					<tr>
+						<td><b>ID</b></td>
+						<td><?php echo $row["PROPERTY_ID"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Address</b></td>
+						<td><?php echo $row["PROPERTY_ADDRESS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Suburb</b></td>
+						<td><?php echo $row["PROPERTY_SUBURB"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Type</b></td>
+						<td><?php echo $ptype["TYPE_NAME"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Bedrooms</b></td>
+						<td><?php echo $row["PROPERTY_BEDROOMS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Bathrooms</b></td>
+						<td><?php echo $row["PROPERTY_BATHROOMS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Car Parks</b></td>
+						<td><?php echo $row["PROPERTY_CARPARKS"] ?></td>
+					</tr>
+				</table><br />
+				<h2>Listing Details</h2>
+				<table align="center" cellpadding="3" class="edit-table">
+					<tr>
+						<td><b>ID</b></td>
+						<td><?php echo $listing["LISTING_ID"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Seller</b></td>
+						<td><?php echo $seller["SELLER_FNAME"]." ".$seller["SELLER_LNAME"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Description</b></td>
+						<td><?php echo $listing["LISTING_DESC"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Price</b></td>
+						<td><?php echo $listing["LISTING_PRICE"]; ?></td>
+					</tr>
+				</table><br />
+				
 			<?php
-		} else {
-			echo "<center>Error deleting Property. Check that no listings use the property.";
-		} 
-		echo "<center><input type='button' value='Return to List'
-OnClick='window.location=\"property.php\"'>
-</center>"; 
+				} else {
+					echo "<center><p>There was an error deleting the property.</p>";
+				}
+			
+			} else {
+				echo "<center><p>There was an error deleting the listing.</p>";
+			} 
+				echo "<center><input type='button' value='Return to List'OnClick='window.location=\"property.php\"'></center>"; 
 			
 			break;
 			

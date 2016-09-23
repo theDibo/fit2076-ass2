@@ -7,7 +7,7 @@ include("checklogin.php");
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-$query = "SELECT * FROM Property ORDER BY property_type";
+$query = "SELECT * FROM Property ORDER BY property_suburb";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 ?>

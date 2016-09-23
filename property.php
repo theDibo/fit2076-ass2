@@ -96,6 +96,7 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 			</tr>
 
 			<?php
+			  	
 				while ($row = oci_fetch_array($stmt)) {
 			?>
 			<tr>

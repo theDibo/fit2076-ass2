@@ -101,6 +101,21 @@ table {
 	text-align: center;
 }
 
+.edit-table {
+	border: 0px solid black;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	min-width: 650px;
+}
+
+.edit-table td, th {
+	padding: 10px;
+}
+
+.edit-table th {
+	text-align: center;
+}
+
 .page-title {
 	margin-top: 50px;
 }

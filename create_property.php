@@ -127,7 +127,7 @@ oci_execute($stmt);
 				</tr>
 				<tr>
 					<td><b><label for="price">Price</label></b></td>
-					<td><input type="number" name="price" min="0" required /></td>
+					<td>$<input type="number" name="price" min="0" required /></td>
 				</tr>
 			</table>
 			
