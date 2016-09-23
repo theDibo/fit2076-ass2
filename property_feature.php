@@ -41,15 +41,14 @@ oci_execute($stmt);
 		  <!-- Blank for spacing -->
 		</div>
 		<div class="col-sm-8 text-left content-div">
-	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
-  	  
-  	  <center><h1 class="page-title">Features</h1></center>
-  	  
-  	  <div class="col-md-6 col-md-offset-2">
-	  <a href="create_feature.php" class="btn btn-default btn-md col-md-5">Create New Feature</a>
-	  </div>
-  	  
-	  	  <table border="1" align="left" class="display-table">
+	  	<!-- ALL CONTENT GOES INSIDE THIS DIV -->
+	  	  <center><h1 class="page-title">Property Features</h1></center>
+	  	  
+	  	  <div class="col-md-6 col-md-offset-2">
+		  <a href="create_type.php" class="btn btn-default btn-md col-md-5 custbutton">Create New Feature</a>
+		  </div>
+	  	  
+	  	  <table border="1" align="center" class="display-table">
 	
 			<tr>
 	           <th>ID</th>
@@ -73,6 +72,7 @@ oci_execute($stmt);
 		?>
 
 		</table>
+	  	  
 		</div>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
