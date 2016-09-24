@@ -7,7 +7,9 @@ include("checklogin.php");
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-$query = "SELECT * FROM Property ORDER BY property_suburb";
+
+// Select all images
+$query = "SELECT * FROM Picture ORDER BY property_id";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 ?>
@@ -42,6 +44,21 @@ oci_execute($stmt);
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
 	  	  <center><h1 class="page-title">Property Images</h1></center>
+	  	  <form method="post" action="delete_images.php">
+	  	  
+	  	  	<table border="1" align="center" class="display-table">
+	  	  		
+	  	  		<tr>
+	  	  			<th>ID</th>
+	  	  			<th>Image</th>
+	  	  			<th>Filesize</th>
+	  	  			<th>Property</th>
+	  	  			<th>Delete</th>
+	  	  		</tr>
+	  	  		
+	  	  	</table>
+	  	  	
+	  	  </form>
 	  	  
 		</div>
 		<div class="col-sm-2 sidenav">
@@ -55,3 +72,7 @@ oci_execute($stmt);
 </body>
 </html>
 
+<?php
+	oci_free_statement($stmt);
+	oci_close($conn);
+?>

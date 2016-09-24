@@ -38,6 +38,10 @@ $ptype = oci_fetch_array($stmt);
 $query = "SELECT * FROM PropertyType ORDER BY type_name";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
+
+$imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/images";
+
+$dir = opendir($imagedir);
 ?>
 <html lang="en">
 <head>
@@ -184,6 +188,44 @@ oci_execute($stmt);
 			$("#property-form").validate();
 			</script>
 			
+			<h2>Property Images</h2>
+			
+			<?php
+			// Select all Picture records for the current property
+			$query = "SELECT * FROM Picture WHERE property_id = ".$_GET["id"];
+			$stmt = oci_parse($conn, $query);
+			oci_execute($stmt);
+			?>
+			
+			<!-- Image Display Table -->
+			
+			<table align="center" cellpadding="3" class="edit-table">
+				
+				<tr>
+					<th>Image</th>
+					<th>Filesize</th>
+					<th>Delete</th>
+				</tr>
+				<?php
+			  	$results = false;
+				while ($images = oci_fetch_array($stmt)) {
+					$results = true; 
+				?>
+				<tr>
+					<td><?php echo "<img src='images/".$images["PIC_NAME"]."' alt='".$images["PIC_NAME"]."' class='property-image'><br />"; ?></td>
+					<td><?php echo filesize($imagedir."/".$images["PIC_NAME"])." MB" ?></td>
+				</tr>
+				<?php 
+				} 
+				?>
+				
+			</table>
+			
+			<form id="property-image-form" class="edit-form" method="post" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=UploadImage">
+				
+			<!-- Upload Image Form -->	
+				
+			</form>
 			<?php
 				
 			break;
@@ -392,3 +434,8 @@ oci_execute($stmt);
 </body>
 </html>
 
+<?php
+	oci_free_statement($stmt);
+	oci_close($conn);
+	closedir($dir);
+?>
