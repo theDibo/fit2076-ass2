@@ -209,22 +209,35 @@ $dir = opendir($imagedir);
 				<?php
 			  	$results = false;
 				while ($images = oci_fetch_array($stmt)) {
-					$results = true; 
+					$results = true;
 				?>
+				
 				<tr>
 					<td><?php echo "<img src='images/".$images["PIC_NAME"]."' alt='".$images["PIC_NAME"]."' class='property-image'><br />"; ?></td>
-					<td><?php echo filesize($imagedir."/".$images["PIC_NAME"])." MB" ?></td>
+					<td><?php echo filesize($imagedir."/".$images["PIC_NAME"])." B" ?></td>
+					<td><a href="edit_property.ph?id=<?php echo $_GET["id"]; ?>&Action=DeleteImage&img=<?php echo $images["PIC_ID"]; ?>"</td>
 				</tr>
+				
 				<?php 
 				} 
+				if (!$results) {
+					?> 
+					<tr>
+						<td colspan="3"><p>No images have been uploaded for this property.</p></td>
+					</tr>
+				<?php
+				}
 				?>
 				
 			</table>
 			
-			<form id="property-image-form" class="edit-form" method="post" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=UploadImage">
-				
+			<form id="property-image-form" class="edit-form" method="post" enctype="multipart/form-data" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=UploadImage">
 			<!-- Upload Image Form -->	
-				
+			<label for="images">Select images to upload: </label>
+			<br />
+			<input id="images" name="images[]" type="file" multiple="multiple" />	
+			<br />
+			<p><input type="submit" name="submit" value="Upload" /></p>
 			</form>
 			<?php
 				
@@ -274,6 +287,69 @@ $dir = opendir($imagedir);
 					
 			break;
 			
+			// Upload Image Case
+			case "UploadImage":
+					
+					if (count($_FILES["images"]["name"]) > 0) {
+						// Loop through the files and set the temp file path
+						for ($i=0; $i < count($_FILES["images"]["name"]); $i++) {
+							// Save the temp file path
+							$tmpFilePath = $_FILES["images"]["tmp_name"][$i];
+
+							// Ensure that the filepath exists
+							if ($tmpFilePath != "") {
+
+								// Save the filename
+								$filename = date('d-m-Y-h-i-s').'-'.$_FILES["images"]["name"][$i];
+
+								// Save the url and file
+								$filePath = "images/".$filename;
+
+								// Upload the file into the tmp dir
+								if (move_uploaded_file($tmpFilePath, $filePath)) {
+
+									$files[] = $filename;
+									// insert into database
+									$query = "INSERT INTO Picture VALUES (picture_seq.nextval, ".$filename.", ".$_GET["id"].")";
+								}
+							}
+						}
+					}
+		
+		// Display success message
+		echo "<h1>Uploaded:</h1>";
+		if (is_array($files)) {
+			echo "<ul>";
+			foreach ($files as $file) {
+				echo "<li>$file</li>";
+			}
+			echo "</ul>";
+			echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+		}
+			break;
+			
+			// Delete Image Case
+			case "DeleteImage":
+				
+				$pic_id = $_GET["img"];
+				
+				$query = "SELECT * FROM Picture WHERE pic_id =".$pic_id;
+				$stmt = oci_parse($conn, $query);
+				oci_execute($stmt);
+				$pic = oci_fetch_array($stmt);
+				
+				unlink($pic["PIC_NAME"]);
+				
+				$query = "DELETE FROM Picture WHERE pic_id =".$pic_id;
+				$stmt = oci_parse($conn, $query);
+					
+				if (@oci_execute($stmt)) {
+					// Successful deletion
+					echo "<p>Successfully deleted the file ".$pic["PIC_NAME"]."</p>";
+				}
+				
+			break;
+					
 			// Delete Case
 			case "Delete":
 					

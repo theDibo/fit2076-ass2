@@ -138,6 +138,12 @@ table {
 .button-icon {
 	font-size: 12px;
 }
+
 .input-right {
 	margin-right: 50px;
+}
+
+.property-image {
+	max-height: 400px;
+	max-width: 400px;
 }
