@@ -123,7 +123,7 @@ REFERENCES Feature(feature_id)
 /* Picture Table */
 CREATE TABLE Picture (
 pic_id INTEGER NOT NULL,
-pic_name VARCHAR(30) NOT NULL,
+pic_name VARCHAR(100) NOT NULL,
 property_id INTEGER NOT NULL,
 CONSTRAINT PK_Picture PRIMARY KEY (pic_id),
 CONSTRAINT FK_Picture_property FOREIGN KEY (property_id) 

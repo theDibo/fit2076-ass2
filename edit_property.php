@@ -39,7 +39,7 @@ $query = "SELECT * FROM PropertyType ORDER BY type_name";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 
-$imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/images";
+$imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 
 $dir = opendir($imagedir);
 ?>
@@ -213,9 +213,9 @@ $dir = opendir($imagedir);
 				?>
 				
 				<tr>
-					<td><?php echo "<img src='images/".$images["PIC_NAME"]."' alt='".$images["PIC_NAME"]."' class='property-image'><br />"; ?></td>
-					<td><?php echo filesize($imagedir."/".$images["PIC_NAME"])." B" ?></td>
-					<td><a href="edit_property.ph?id=<?php echo $_GET["id"]; ?>&Action=DeleteImage&img=<?php echo $images["PIC_ID"]; ?>"</td>
+					<td><?php echo "<img src='property_images/".$images["PIC_NAME"]."' alt='".$images["PIC_NAME"]."' class='property-image'><br />"; ?></td>
+					<td><?php echo ceil(filesize($imagedir."/".$images["PIC_NAME"]) / 1024)." KB" ?></td>
+					<td><a href="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=DeleteImage&img=<?php echo $images["PIC_ID"]; ?>">Delete</a></td>
 				</tr>
 				
 				<?php 
@@ -289,7 +289,7 @@ $dir = opendir($imagedir);
 			
 			// Upload Image Case
 			case "UploadImage":
-					
+					// TODO: Check that the file is an image within a certain size
 					if (count($_FILES["images"]["name"]) > 0) {
 						// Loop through the files and set the temp file path
 						for ($i=0; $i < count($_FILES["images"]["name"]); $i++) {
@@ -303,14 +303,16 @@ $dir = opendir($imagedir);
 								$filename = date('d-m-Y-h-i-s').'-'.$_FILES["images"]["name"][$i];
 
 								// Save the url and file
-								$filePath = "images/".$filename;
+								$filePath = "property_images/".$filename;
 
 								// Upload the file into the tmp dir
 								if (move_uploaded_file($tmpFilePath, $filePath)) {
 
 									$files[] = $filename;
 									// insert into database
-									$query = "INSERT INTO Picture VALUES (picture_seq.nextval, ".$filename.", ".$_GET["id"].")";
+									$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
+									$stmt = oci_parse($conn, $query);
+									oci_execute($stmt);
 								}
 							}
 						}
@@ -338,7 +340,7 @@ $dir = opendir($imagedir);
 				oci_execute($stmt);
 				$pic = oci_fetch_array($stmt);
 				
-				unlink($pic["PIC_NAME"]);
+				unlink("property_images/".$pic["PIC_NAME"]);
 				
 				$query = "DELETE FROM Picture WHERE pic_id =".$pic_id;
 				$stmt = oci_parse($conn, $query);
@@ -346,6 +348,10 @@ $dir = opendir($imagedir);
 				if (@oci_execute($stmt)) {
 					// Successful deletion
 					echo "<p>Successfully deleted the file ".$pic["PIC_NAME"]."</p>";
+					echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+				} else {
+					echo "<p>Error: could not delete the file record.</p>";
+					echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
 				}
 				
 			break;
@@ -424,6 +430,8 @@ $dir = opendir($imagedir);
 			$query = "DELETE FROM Listing WHERE listing_id=".$listing["LISTING_ID"];
 			$stmt = oci_parse($conn, $query);
 			
+			// TODO: Delete all images
+					
 			// Check that the delete happens successfully
 			if (@oci_execute($stmt)) {
 				// Delete the listing
