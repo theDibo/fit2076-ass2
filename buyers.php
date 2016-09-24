@@ -63,7 +63,9 @@ oci_execute($stmt);
 			</tr>
 
 			<?php
+			  	$results = false;
 				while ($row = oci_fetch_array($stmt)) {
+					$results = true;
 			?>
 			<tr>
 				<td><?php echo $row["BUYER_ID"] ?></td>
@@ -79,6 +81,13 @@ oci_execute($stmt);
 				<td><a href="edit_BUYER.php?id=<?php echo $row["BUYER_ID"] ?>&Action=Update">Update</a></td>
 				<td><a href="edit_BUYER.php?id=<?php echo $row["BUYER_ID"] ?>&Action=Delete">Delete</a></td>
 			</tr>
+		<?php
+			}
+			if (!$results) {
+		?> 
+		
+			<tr><td colspan="12">No matching records were found.</td></tr>
+		
 		<?php
 			}
 		?>
