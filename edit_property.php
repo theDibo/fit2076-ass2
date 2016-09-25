@@ -239,6 +239,7 @@ $dir = opendir($imagedir);
 			<br />
 			<p><input type="submit" name="submit" value="Upload" /></p>
 			</form>
+			<p>Note: Files must be in JPG, JPEG, PNG or GIF format.</p>
 			<?php
 				
 			break;
@@ -289,45 +290,49 @@ $dir = opendir($imagedir);
 			
 			// Upload Image Case
 			case "UploadImage":
-					// TODO: Check that the file is an image within a certain size
+					
+					echo "<h1>Results:</h1>";
+					echo "<ul>";
+					// Array storing the allowed file types
+					$allowed = array("gif", "png", "jpg", "jpeg");
 					if (count($_FILES["images"]["name"]) > 0) {
 						// Loop through the files and set the temp file path
 						for ($i=0; $i < count($_FILES["images"]["name"]); $i++) {
 							// Save the temp file path
 							$tmpFilePath = $_FILES["images"]["tmp_name"][$i];
+							
+							// Check that the file is of an allowed extension
+							$ext = pathinfo($_FILES["images"]["name"][$i], PATHINFO_EXTENSION);
+							if (!in_array($ext, $allowed)) {
+								// Output an error message
+								echo "<li><p>Error: could not upload file ".$_FILES["images"]["name"][$i]." - only JPG, JPEG, PNG and GIF files can be uploaded.</p></li>";
+							} else {
+								// Ensure that the filepath exists
+								if ($tmpFilePath != "") {
 
-							// Ensure that the filepath exists
-							if ($tmpFilePath != "") {
+									// Save the filename
+									$filename = date('d-m-Y-h-i-s').'-'.$_FILES["images"]["name"][$i];
 
-								// Save the filename
-								$filename = date('d-m-Y-h-i-s').'-'.$_FILES["images"]["name"][$i];
+									// Save the url and file
+									$filePath = "property_images/".$filename;
 
-								// Save the url and file
-								$filePath = "property_images/".$filename;
+									// Upload the file into the tmp dir
+									if (move_uploaded_file($tmpFilePath, $filePath)) {
 
-								// Upload the file into the tmp dir
-								if (move_uploaded_file($tmpFilePath, $filePath)) {
+										$files[] = $filename;
+										// insert into database
+										$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
+										$stmt = oci_parse($conn, $query);
+										oci_execute($stmt);
 
-									$files[] = $filename;
-									// insert into database
-									$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
-									$stmt = oci_parse($conn, $query);
-									oci_execute($stmt);
+										// Output that the file was successfully uploaded
+										echo "<li><p>Uploaded file ".$_FILES["images"]["name"][$i]." successfully.</p></li>";
+									}
 								}
 							}
 						}
 					}
-		
-		// Display success message
-		echo "<h1>Uploaded:</h1>";
-		if (is_array($files)) {
-			echo "<ul>";
-			foreach ($files as $file) {
-				echo "<li>$file</li>";
-			}
-			echo "</ul>";
 			echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
-		}
 			break;
 			
 			// Delete Image Case
@@ -426,15 +431,27 @@ $dir = opendir($imagedir);
 			// Confirm Delete Case
 			case "ConfirmDelete":
 			
+			// Delete all images of the property
+			$query = "SELECT * FROM Picture WHERE property_id =".$_GET["id"];
+			$stmt = oci_parse($conn, $query);
+			oci_execute($stmt);
+			while ($pic = oci_fetch_array($stmt)) {
+				$filename = "property_images/".$pic["PIC_NAME"];
+				unlink($filename);
+			}
+			
+			// Delete all image records
+			$query = "DELETE FROM Picture WHERE property_id =".$_GET["id"];
+			$stmt = oci_parse($conn, $query);
+			oci_execute($stmt);
+			
 			// Delete the listing
 			$query = "DELETE FROM Listing WHERE listing_id=".$listing["LISTING_ID"];
 			$stmt = oci_parse($conn, $query);
-			
-			// TODO: Delete all images
 					
 			// Check that the delete happens successfully
 			if (@oci_execute($stmt)) {
-				// Delete the listing
+				// Delete the property
 				$query = "DELETE FROM Property WHERE property_id=".$_GET["id"];
 				$stmt = oci_parse($conn, $query);
 				if (@oci_execute($stmt)) {
