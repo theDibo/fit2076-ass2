@@ -40,8 +40,6 @@ $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 
 $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
-
-$dir = opendir($imagedir);
 ?>
 <html lang="en">
 <head>
@@ -311,7 +309,7 @@ $dir = opendir($imagedir);
 								if ($tmpFilePath != "") {
 
 									// Save the filename
-									$filename = date('d-m-Y-h-i-s').'-'.$_FILES["images"]["name"][$i];
+									$filename = date('dmYhis').'-'.$_FILES["images"]["name"][$i];
 
 									// Save the url and file
 									$filePath = "property_images/".$filename;
@@ -538,5 +536,4 @@ $dir = opendir($imagedir);
 <?php
 	oci_free_statement($stmt);
 	oci_close($conn);
-	closedir($dir);
 ?>
