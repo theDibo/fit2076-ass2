@@ -85,12 +85,20 @@ oci_execute($stmt);
       if(mail($to, $subject, $msg, $from))
       {
         echo "Mail Sent";
-        echo "<p><a href='sellers.php'>Return to seller Page</a></p>";
+?>
+        <form action="sellers.php">
+        <input type="submit" value="Go back to sellers page" />
+        </form>
+<?php
       }
       else
       {
         echo "Error Sending Mail";
-        echo "<p><a href='sellers.php'>Return to seller Page</a></p>";
+?>
+        <form action="sellers.php">
+        <input type="submit" value="Go back to sellers page" />
+        </form>
+<?php
       }
     }
  ?>	  
