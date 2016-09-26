@@ -309,7 +309,7 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 								if ($tmpFilePath != "") {
 
 									// Save the filename
-									$filename = date('dmYhis').'-'.$_FILES["images"]["name"][$i];
+									$filename = date('d-m-Y-h-i-s').'--'.$_FILES["images"]["name"][$i];
 
 									// Save the url and file
 									$filePath = "property_images/".$filename;

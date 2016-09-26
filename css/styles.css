@@ -70,15 +70,12 @@ footer {
 		height: auto;
 		padding: 15px;
 	}
-	.row.content {height:auto;}
 }
 
 .navbar {
 	margin-bottom: 0;
 	border-radius: 0;
 }
-
-.row.content {height:100%}
 
 #content {
 	min-height: 674px;
@@ -98,6 +95,7 @@ table {
 	position: relative;
 	top: 50px;
 	min-width: 650px;
+	margin-bottom: 30px;
 }
 
 .display-table td, th {
@@ -147,4 +145,9 @@ table {
 .small-property-image {
 	max-height: 200px;
 	max-width: 200px;
+}
+
+.site-footer {
+	text-align: center;
+	margin-top: 50px;
 }

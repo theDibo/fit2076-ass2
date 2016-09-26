@@ -43,7 +43,14 @@ $dir = opendir($imagedir);
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
 	  	  <center><h1 class="page-title">Property Images</h1></center>
 	  	  
-	  	  <form method="post" action="delete_images.php">
+	  	  <?php
+			if (!isset($_GET["action"])) {
+			// Display the images	
+			?>
+	  	  
+	  	  <form method="post" action="images.php?action=delete">
+	  	  
+	  	  <input type="submit" value="Delete selected images" />
 	  	  
 	  	  	<table border="1" align="center" class="display-table">
 	  	  		
@@ -106,20 +113,18 @@ $dir = opendir($imagedir);
 						}
 						
 					}
-					?>
-	  	  	</table>
-	  	  	
-	  	  	<table align="center">
-				<tr>
-					<td><input type="submit" value="Delete selected images" /></td>
-				</tr>
-			</table>
-			<?php
 				}
 				?>
-	  	  		
+			</table>
 	  	  	
 	  	  </form>
+				<?php
+			} else {
+				if ($_GET["action"] == "delete") {
+					// Delete the posted images
+				}
+			}
+			?>
 	  	  
 		</div>
 		<div class="col-sm-2 sidenav">
