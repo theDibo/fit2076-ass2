@@ -71,9 +71,9 @@ oci_execute($stmt);
 					
 					// Select the listing for the property
 					$query = "SELECT listing_id, listing_price FROM Listing WHERE property_id =".$row["PROPERTY_ID"];
-					$stmt = oci_parse($conn, $query);
-					oci_execute($stmt);
-					$listing = oci_fetch_array($stmt);
+					$stmt3 = oci_parse($conn, $query);
+					oci_execute($stmt3);
+					$listing = oci_fetch_array($stmt3);
 			?>
 			
 			<tr>
@@ -95,7 +95,10 @@ oci_execute($stmt);
 				
 			</tr>
 			
-			<?php } ?>
+			<?php }
+				if (!$results) {
+					echo "<tr><td colspan='5'><p>No properties were found.</p></td></tr>";
+				}?>
 			</table>
 			</form>
 			<script language="javascript">
