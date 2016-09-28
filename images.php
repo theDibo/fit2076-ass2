@@ -44,11 +44,11 @@ $dir = opendir($imagedir);
 	  	  <center><h1 class="page-title">Property Images</h1></center>
 	  	  
 	  	  <?php
-			if (!isset($_GET["action"])) {
+			if (!isset($_POST["check"])) {
 			// Display the images	
 			?>
 	  	  
-	  	  <form method="post" action="images.php?action=delete">
+	  	  <form method="post" action="images.php">
 	  	  
 	  	  <input type="submit" value="Delete selected images" />
 	  	  
@@ -120,9 +120,28 @@ $dir = opendir($imagedir);
 	  	  </form>
 				<?php
 			} else {
-				if ($_GET["action"] == "delete") {
-					// Delete the posted images
+					
+				echo "<h2>Deleted Images:</h2>";
+				echo "<ul>";
+
+				// Delete the posted images
+				foreach($_POST["check"] as $file) {
+					
+					// Delete the record, if it exists
+					$query = "DELETE FROM Picture WHERE pic_name = :pfile";
+					$stmt = oci_parse($conn, $query);
+					oci_bind_by_name($stmt, ":pfile", $file);
+					oci_execute($stmt);
+
+					// Delete the file
+					unlink("property_images/".$file);
+
+					echo "<li><p>Image ".$file.".</p></li>";
 				}
+
+				echo "</ul>";
+				
+				echo "<a href='images.php'>Images</a>";
 			}
 			?>
 	  	  
