@@ -1,12 +1,11 @@
 <?php 
 // Start output buffering
 ob_start();
-
 include("checklogin.php");
-
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
+<<<<<<< HEAD
 //=============
 define('FPDF_FONTPATH','FPDF/font/');
   require('FPDF/fpdf.php');
@@ -115,6 +114,11 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 
 
 
+=======
+$query = "SELECT * FROM BUYER ORDER BY BUYER_ID";
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
+>>>>>>> 692448bb2a22f132e687494b4d34b623b7980fe3
 ?>
 
 <html lang="en">
@@ -150,6 +154,7 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
   	  
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_buyer.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
+	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Email Buyers</a>
 	  </div>
             
              <div class="col-md-6 col-md-offset-2">
@@ -178,7 +183,9 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 			</tr>
 
 			<?php
+			  	$results = false;
 				while ($row = oci_fetch_array($stmt)) {
+					$results = true;
 			?>
 			<tr>
 				<td><?php echo $row["BUYER_ID"] ?></td>
@@ -196,13 +203,20 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 			</tr>
 		<?php
 			}
+			if (!$results) {
+		?> 
+		
+			<tr><td colspan="12">No matching records were found.</td></tr>
+		
+		<?php
+			}
 		?>
 
 		</table>
 		</div>
-		<div class="col-sm-2 sidenav">
-		  <!-- Blank for spacing -->
-		</div>
+	</div>
+	<div class="col-sm-2 sidenav">
+	  <!-- Blank for spacing -->
 	</div>
 </div>
 

@@ -107,8 +107,8 @@ $row = oci_fetch_array($stmt);
 					<td><input type="text" name="email" size="60" value="<?php echo $row["SELLER_EMAIL"]; ?>" required></td>
 				</tr>
                 <tr>
-					<td><b><label for="mailinglist">Mailing</label></b></td>
-					<td><input type="text" name="mailinglist" size="1" value="<?php echo $row["SELLER_MAILING"]; ?>" required></td>
+					<td><b><label for="mailinglist">Mailing list</label></b></td>
+					<td><input type="checkbox" name="mailinglist" value = "Yes"></td>
 				</tr>
 			
 			</table><br />
@@ -125,7 +125,7 @@ $row = oci_fetch_array($stmt);
 	  	  	
 	  	  	<script language="javascript">
 			// Form validation function
-			$("#SELLER-form").validate();
+			$("#seller-form").validate();
 			</script>
 			
 			<?php
@@ -134,8 +134,17 @@ $row = oci_fetch_array($stmt);
 		
 			// Confirm Update Case
 			case "ConfirmUpdate":
+                
+            if(isset($_POST['mailinglist']) &&  $_POST['mailinglist'] == 'Yes') 
+            {
+                $mail = 'Y';
+            }
+            else
+            {
+                $mail = 'N';
+            } 
 					
-			$query = "UPDATE SELLER set SELLER_FNAME = :fname, SELLER_LNAME = :lname, SELLER_ADDRESS = :address, SELLER_SUBURB = :suburb, SELLER_STATE = :state, SELLER_PHONE = :phone, SELLER_MOBILE = :mobile, SELLER_EMAIL = :email, SELLER_MAILING = :mailinglist WHERE SELLER_ID= ".$_GET["id"];
+			$query = "UPDATE SELLER set SELLER_FNAME = :fname, SELLER_LNAME = :lname, SELLER_ADDRESS = :address, SELLER_SUBURB = :suburb, SELLER_STATE = :state, SELLER_PHONE = :phone, SELLER_MOBILE = :mobile, SELLER_EMAIL = :email, SELLER_MAILING = '$mail' WHERE SELLER_ID= ".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
 			oci_bind_by_name($stmt, ":fname", $_POST["fname"]);
             oci_bind_by_name($stmt, ":lname", $_POST["lname"]);
@@ -145,13 +154,12 @@ $row = oci_fetch_array($stmt);
             oci_bind_by_name($stmt, ":phone", $_POST["phone"]);
             oci_bind_by_name($stmt, ":mobile", $_POST["mobile"]);
             oci_bind_by_name($stmt, ":email", $_POST["email"]);
-            oci_bind_by_name($stmt, ":mailinglist", $_POST["mailinglist"]);
 					
 			if (@oci_execute($stmt)) {
 				
 				// If edit was successful
 				echo "Update was successful.";
-				echo "<center><input type='button' value='Return' OnClick='window.location=\"SELLERS.php\"'></center>";
+				echo "<center><input type='button' value='Return' OnClick='window.location=\"sellers.php\"'></center>";
 				
 			} else {
 				

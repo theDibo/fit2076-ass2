@@ -87,13 +87,13 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "<p>";
 						echo "The Feature '".$_POST["name"]."' was successfully created.";
 						echo "</p>";
-						echo "<p><a href='property_feature.php'>Return to Feature Page</a></p>";
+						echo "<p><a href='feature.php'>Return to Feature Page</a></p>";
 					} else {
 						// If the insert failed
 						echo "<p>";
 						echo "Error: the Feature could not be inserted.";
 						echo "</p>";
-						echo "<p><a href='property_feature.php'>Return to Feature Page</a></p>";
+						echo "<p><a href='feature.php'>Return to Feature Page</a></p>";
 					}
 				}
 			?>

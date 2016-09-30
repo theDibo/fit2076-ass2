@@ -5,9 +5,17 @@
 	Mid: #1A2930 'Denim'
 	High: #F7CE3E 'Marigold'
 */
-
+html {
+	height: 100%;
+}
 body {
 	background-color: #FFF;
+	min-height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -30,7 +38,7 @@ header {
 .sidenav {
 	padding-top: 20px;
 	background-color: #FFF;
-	min-height: 100%;
+	height: 200px;
 }
 
 .topnavbar {
@@ -53,7 +61,6 @@ footer {
 	background-color: #0A1612;
 	color: white;
 	padding: 15px;
-	bottom: 0px;
 	width: 100%;
 	font-size: 12px;
 }
@@ -63,15 +70,12 @@ footer {
 		height: auto;
 		padding: 15px;
 	}
-	.row.content {height:auto;}
 }
 
 .navbar {
 	margin-bottom: 0;
 	border-radius: 0;
 }
-
-.row.content {height:100%}
 
 #content {
 	min-height: 674px;
@@ -90,6 +94,8 @@ table {
 	border: 2px solid #0A1612;
 	position: relative;
 	top: 50px;
+	min-width: 650px;
+	margin-bottom: 30px;
 }
 
 .display-table td, th {
@@ -97,6 +103,21 @@ table {
 }
 
 .display-table th {
+	text-align: center;
+}
+
+.edit-table {
+	border: 0px solid black;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	min-width: 650px;
+}
+
+.edit-table td, th {
+	padding: 10px;
+}
+
+.edit-table th {
 	text-align: center;
 }
 
@@ -111,6 +132,22 @@ table {
 .button-icon {
 	font-size: 12px;
 }
+
 .input-right {
 	margin-right: 50px;
+}
+
+.property-image {
+	max-height: 400px;
+	max-width: 400px;
+}
+
+.small-property-image {
+	max-height: 200px;
+	max-width: 200px;
+}
+
+.site-footer {
+	text-align: center;
+	margin-top: 50px;
 }

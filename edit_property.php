@@ -16,6 +16,18 @@ $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 $row = oci_fetch_array($stmt);
 
+// Select the listing to edit
+$query = "SELECT * FROM Listing WHERE property_id = ".$_GET["id"];
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
+$listing = oci_fetch_array($stmt);
+
+// Select the seller
+$query = "SELECT * FROM Seller WHERE seller_id = ".$listing["SELLER_ID"];
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
+$seller = oci_fetch_array($stmt);
+
 // Select the current PropertyType record
 $query = "SELECT * FROM PropertyType WHERE type_id=".$row["TYPE_ID"];
 $stmt = oci_parse($conn, $query);
@@ -26,6 +38,8 @@ $ptype = oci_fetch_array($stmt);
 $query = "SELECT * FROM PropertyType ORDER BY type_name";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
+
+$imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 ?>
 <html lang="en">
 <head>
@@ -78,7 +92,7 @@ oci_execute($stmt);
 			
 			<form id="property-form" class="edit-form" method="post" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=ConfirmUpdate" onsubmit="return validateForm(this)">
 			<fieldset>
-			<table align="center" cellpadding="3">
+			<table align="center" cellpadding="3" class="edit-table">
 				<tr>
 					<td><b>ID</b></td>
 					<td><?php echo $row["PROPERTY_ID"]; ?></td>
@@ -122,6 +136,40 @@ oci_execute($stmt);
 					<td><input type="number" name="carparks" min="0" value="<?php echo $row["PROPERTY_CARPARKS"]; ?>" required></td>
 				</tr>
 			</table><br />
+			
+			<h2>Listing Details</h2>
+			<table align="center" cellpadding="3" class="edit-table">
+				<tr>
+					<td><b><label for="description">Description</label></b></td>
+					<td><textarea name="description" cols="68" rows="10"><?php echo $listing["LISTING_DESC"]; ?></textarea></td>
+				</tr>
+				<tr>
+					<td><b><label for="seller">Seller</label></b></td>
+					<td><select name="seller">
+						<?php
+						// Select all Seller records
+						$query = "SELECT * FROM Seller ORDER BY seller_lname";
+						$stmt = oci_parse($conn, $query);
+						oci_execute($stmt);	
+					
+						while ($row = oci_fetch_array($stmt)) {
+						?>
+
+							<option value="<?php echo $row["SELLER_ID"]; ?>" <?php echo getselect($seller["SELLER_ID"], $row["SELLER_ID"]); ?>>
+							<?php echo $row["SELLER_FNAME"]." ".$row["SELLER_LNAME"]; ?>
+							</option>
+
+						<?php	
+						}
+						?>
+					</select></td>
+				</tr>
+				<tr>
+					<td><b><label for="price">Price</label></b></td>
+					<td>$<input type="number" name="price" min="0" value="<?php echo $listing["LISTING_PRICE"]; ?>" required /></td>
+				</tr>
+			</table>
+			
 			</fieldset>
 			
 			<table align="center">
@@ -138,6 +186,58 @@ oci_execute($stmt);
 			$("#property-form").validate();
 			</script>
 			
+			<h2>Property Images</h2>
+			
+			<?php
+			// Select all Picture records for the current property
+			$query = "SELECT * FROM Picture WHERE property_id = ".$_GET["id"];
+			$stmt = oci_parse($conn, $query);
+			oci_execute($stmt);
+			?>
+			
+			<!-- Image Display Table -->
+			
+			<table align="center" cellpadding="3" class="edit-table">
+				
+				<tr>
+					<th>Image</th>
+					<th>Filesize</th>
+					<th>Delete</th>
+				</tr>
+				<?php
+			  	$results = false;
+				while ($images = oci_fetch_array($stmt)) {
+					$results = true;
+				?>
+				
+				<tr>
+					<td><?php echo "<img src='property_images/".$images["PIC_NAME"]."' alt='".$images["PIC_NAME"]."' class='property-image'><br />"; ?></td>
+					<td><?php echo ceil(filesize($imagedir."/".$images["PIC_NAME"]) / 1024)." KB" ?></td>
+					<td><a href="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=DeleteImage&img=<?php echo $images["PIC_ID"]; ?>">Delete</a></td>
+				</tr>
+				
+				<?php 
+				} 
+				if (!$results) {
+					?> 
+					<tr>
+						<td colspan="3"><p>No images have been uploaded for this property.</p></td>
+					</tr>
+				<?php
+				}
+				?>
+				
+			</table>
+			
+			<form id="property-image-form" class="edit-form" method="post" enctype="multipart/form-data" action="edit_property.php?id=<?php echo $_GET["id"]; ?>&Action=UploadImage">
+			<!-- Upload Image Form -->	
+			<label for="images">Select images to upload: </label>
+			<br />
+			<input id="images" name="images[]" type="file" multiple="multiple" />	
+			<br />
+			<p><input type="submit" name="submit" value="Upload" /></p>
+			</form>
+			<p>Note: Files must be in JPG, JPEG, PNG or GIF format.</p>
 			<?php
 				
 			break;
@@ -145,7 +245,7 @@ oci_execute($stmt);
 			// Confirm Update Case
 			case "ConfirmUpdate":
 					
-			$query = "UPDATE Property set property_address=:address, property_suburb=:suburb, type_id = :type, property_bedrooms = :bedrooms, property_bathrooms = :bathrooms, property_carparks = :carparks WHERE property_id=".$_GET["id"];
+			$query = "UPDATE Property SET property_address=:address, property_suburb=:suburb, type_id = :type, property_bedrooms = :bedrooms, property_bathrooms = :bathrooms, property_carparks = :carparks WHERE property_id=".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
 			oci_bind_by_name($stmt, ":address", $_POST["address"]);
 			oci_bind_by_name($stmt, ":suburb", $_POST["suburb"]);
@@ -156,9 +256,25 @@ oci_execute($stmt);
 					
 			if (@oci_execute($stmt)) {
 				
-				// If edit was successful
-				echo "Update was successful.";
-				echo "<center><input type='button' value='Return' OnClick='window.location=\"property.php\"'></center>";
+				// Update Listing
+				$query = "UPDATE Listing SET seller_id=".$_POST["seller"].", listing_desc=:description, listing_price=:price WHERE listing_id=".$listing["LISTING_ID"];
+				$stmt = oci_parse($conn, $query);
+				oci_bind_by_name($stmt, ":description", $_POST["description"]);
+				oci_bind_by_name($stmt, ":price", $_POST["price"]);
+				
+				if (@oci_execute($stmt)) {
+					
+					// If edit was successful
+					echo "Update was successful.";
+					echo "<center><input type='button' value='Return' OnClick='window.location=\"property.php\"'></center>";
+					
+				} else {
+					
+					// If edit failed
+					echo "<p>There was an error updating the selected listing.</p><br />";
+					echo "<center><input type='button' value='Return to List' OnClick='window.location=\"property.php\"'></center>";
+					
+				}
 				
 			} else {
 				
@@ -170,12 +286,85 @@ oci_execute($stmt);
 					
 			break;
 			
+			// Upload Image Case
+			case "UploadImage":
+					
+					echo "<h1>Results:</h1>";
+					echo "<ul>";
+					// Array storing the allowed file types
+					$allowed = array("gif", "png", "jpg", "jpeg");
+					if (count($_FILES["images"]["name"]) > 0) {
+						// Loop through the files and set the temp file path
+						for ($i=0; $i < count($_FILES["images"]["name"]); $i++) {
+							// Save the temp file path
+							$tmpFilePath = $_FILES["images"]["tmp_name"][$i];
+							
+							// Check that the file is of an allowed extension
+							$ext = pathinfo($_FILES["images"]["name"][$i], PATHINFO_EXTENSION);
+							if (!in_array($ext, $allowed)) {
+								// Output an error message
+								echo "<li><p>Error: could not upload file ".$_FILES["images"]["name"][$i]." - only JPG, JPEG, PNG and GIF files can be uploaded.</p></li>";
+							} else {
+								// Ensure that the filepath exists
+								if ($tmpFilePath != "") {
+
+									// Save the filename
+									$filename = date('d-m-Y-h-i-s').'--'.$_FILES["images"]["name"][$i];
+
+									// Save the url and file
+									$filePath = "property_images/".$filename;
+
+									// Upload the file into the tmp dir
+									if (move_uploaded_file($tmpFilePath, $filePath)) {
+
+										$files[] = $filename;
+										// insert into database
+										$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
+										$stmt = oci_parse($conn, $query);
+										oci_execute($stmt);
+
+										// Output that the file was successfully uploaded
+										echo "<li><p>Uploaded file ".$_FILES["images"]["name"][$i]." successfully.</p></li>";
+									}
+								}
+							}
+						}
+					}
+			echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+			break;
+			
+			// Delete Image Case
+			case "DeleteImage":
+				
+				$pic_id = $_GET["img"];
+				
+				$query = "SELECT * FROM Picture WHERE pic_id =".$pic_id;
+				$stmt = oci_parse($conn, $query);
+				oci_execute($stmt);
+				$pic = oci_fetch_array($stmt);
+				
+				unlink("property_images/".$pic["PIC_NAME"]);
+				
+				$query = "DELETE FROM Picture WHERE pic_id =".$pic_id;
+				$stmt = oci_parse($conn, $query);
+					
+				if (@oci_execute($stmt)) {
+					// Successful deletion
+					echo "<p>Successfully deleted the file ".$pic["PIC_NAME"]."</p>";
+					echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+				} else {
+					echo "<p>Error: could not delete the file record.</p>";
+					echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+				}
+				
+			break;
+					
 			// Delete Case
 			case "Delete":
 					
 			?>
 			
-			<table align="center" cellpadding="3">
+			<table align="center" cellpadding="3" class="edit-table">
 				<tr>
 					<td><b>ID</b></td>
 					<td><?php echo $row["PROPERTY_ID"]; ?></td>
@@ -206,6 +395,26 @@ oci_execute($stmt);
 				</tr>
 			</table><br />
 			
+			<h2>Listing Details</h2>
+			<table align="center" cellpadding="3" class="edit-table">
+				<tr>
+					<td><b>ID</b></td>
+					<td><?php echo $listing["LISTING_ID"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Seller</b></td>
+					<td><?php echo $seller["SELLER_FNAME"]." ".$seller["SELLER_LNAME"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Description</b></td>
+					<td><?php echo $listing["LISTING_DESC"]; ?></td>
+				</tr>
+				<tr>
+					<td><b>Price</b></td>
+					<td><?php echo "$ ".$listing["LISTING_PRICE"]; ?></td>
+				</tr>
+			</table><br />
+			
 			<table align="center">
 				<tr>
 					<td><input type="button" value="Delete Property" onclick="confirm_delete()"></td>
@@ -220,51 +429,92 @@ oci_execute($stmt);
 			// Confirm Delete Case
 			case "ConfirmDelete":
 			
-			$query = "DELETE FROM Property WHERE property_id=".$_GET["id"];
+			// Delete all images of the property
+			$query = "SELECT * FROM Picture WHERE property_id =".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
-			//echo $query;
+			oci_execute($stmt);
+			while ($pic = oci_fetch_array($stmt)) {
+				$filename = "property_images/".$pic["PIC_NAME"];
+				unlink($filename);
+			}
+			
+			// Delete all image records
+			$query = "DELETE FROM Picture WHERE property_id =".$_GET["id"];
+			$stmt = oci_parse($conn, $query);
+			oci_execute($stmt);
+			
+			// Delete the listing
+			$query = "DELETE FROM Listing WHERE listing_id=".$listing["LISTING_ID"];
+			$stmt = oci_parse($conn, $query);
+					
 			// Check that the delete happens successfully
 			if (@oci_execute($stmt)) {
-				?>
-				<center><p>Successfully deleted the following record: </p></center>
-				<br />
-				<table align="center" cellpadding="3">
-				<tr>
-					<td><b>ID</b></td>
-					<td><?php echo $row["PROPERTY_ID"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Address</b></td>
-					<td><?php echo $row["PROPERTY_ADDRESS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Suburb</b></td>
-					<td><?php echo $row["PROPERTY_SUBURB"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Type</b></td>
-					<td><?php echo $ptype["TYPE_NAME"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Bedrooms</b></td>
-					<td><?php echo $row["PROPERTY_BEDROOMS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Bathrooms</b></td>
-					<td><?php echo $row["PROPERTY_BATHROOMS"] ?></td>
-				</tr>
-				<tr>
-					<td><b>Car Parks</b></td>
-					<td><?php echo $row["PROPERTY_CARPARKS"] ?></td>
-				</tr>
-			</table>
+				// Delete the property
+				$query = "DELETE FROM Property WHERE property_id=".$_GET["id"];
+				$stmt = oci_parse($conn, $query);
+				if (@oci_execute($stmt)) {
+					?>
+					<center><p>Successfully deleted the following record: </p></center>
+					<br />
+					<table align="center" cellpadding="3" class="edit-table">
+					<tr>
+						<td><b>ID</b></td>
+						<td><?php echo $row["PROPERTY_ID"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Address</b></td>
+						<td><?php echo $row["PROPERTY_ADDRESS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Suburb</b></td>
+						<td><?php echo $row["PROPERTY_SUBURB"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Type</b></td>
+						<td><?php echo $ptype["TYPE_NAME"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Bedrooms</b></td>
+						<td><?php echo $row["PROPERTY_BEDROOMS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Bathrooms</b></td>
+						<td><?php echo $row["PROPERTY_BATHROOMS"] ?></td>
+					</tr>
+					<tr>
+						<td><b>Car Parks</b></td>
+						<td><?php echo $row["PROPERTY_CARPARKS"] ?></td>
+					</tr>
+				</table><br />
+				<h2>Listing Details</h2>
+				<table align="center" cellpadding="3" class="edit-table">
+					<tr>
+						<td><b>ID</b></td>
+						<td><?php echo $listing["LISTING_ID"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Seller</b></td>
+						<td><?php echo $seller["SELLER_FNAME"]." ".$seller["SELLER_LNAME"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Description</b></td>
+						<td><?php echo $listing["LISTING_DESC"]; ?></td>
+					</tr>
+					<tr>
+						<td><b>Price</b></td>
+						<td><?php echo $listing["LISTING_PRICE"]; ?></td>
+					</tr>
+				</table><br />
+				
 			<?php
-		} else {
-			echo "<center>Error deleting Property. Check that no listings use the property.";
-		} 
-		echo "<center><input type='button' value='Return to List'
-OnClick='window.location=\"property.php\"'>
-</center>"; 
+				} else {
+					echo "<center><p>There was an error deleting the property.</p>";
+				}
+			
+			} else {
+				echo "<center><p>There was an error deleting the listing.</p>";
+			} 
+				echo "<center><input type='button' value='Return to List'OnClick='window.location=\"property.php\"'></center>"; 
 			
 			break;
 			
@@ -283,3 +533,7 @@ OnClick='window.location=\"property.php\"'>
 </body>
 </html>
 
+<?php
+	oci_free_statement($stmt);
+	oci_close($conn);
+?>

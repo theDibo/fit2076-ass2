@@ -151,6 +151,7 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
   	  
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_seller.php" class="btn btn-default btn-md col-md-5">Create New Seller</a>
+	  <a href="sellers_email.php" class="btn btn-default btn-md col-md-5">Email Sellers</a>
 	  </div>
             
         <div class="col-md-6 col-md-offset-2">
@@ -178,7 +179,9 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 			</tr>
 
 			<?php
+			  	$results = false;
 				while ($row = oci_fetch_array($stmt)) {
+					$results = true;
 			?>
 			<tr>
 				<td><?php echo $row["SELLER_ID"] ?></td>
@@ -194,6 +197,13 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 				<td><a href="edit_seller.php?id=<?php echo $row["SELLER_ID"] ?>&Action=Update">Update</a></td>
 				<td><a href="edit_seller.php?id=<?php echo $row["SELLER_ID"] ?>&Action=Delete">Delete</a></td>
 			</tr>
+		<?php
+			}
+			if (!$results) {
+		?> 
+		
+			<tr><td colspan="12">No matching records were found.</td></tr>
+		
 		<?php
 			}
 		?>

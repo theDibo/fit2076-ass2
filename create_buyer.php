@@ -10,7 +10,6 @@ include("connection.php");
 // Connect to the Oracle database
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Unable to login to database.");
-	
 ?>
 <html lang="en">
 <head>
@@ -123,16 +122,17 @@ $conn = oci_connect($UName, $PWord, $DB)
 					if (@oci_execute($stmt)) {
 						// If the insert was successful
 						echo "<p>";
-						echo "The buyer '".$_POST["fname"]."' '".$_POST["lname"]."'  was successfully created.";
+						echo "The buyer '".$_POST["fname"]." ".$_POST["lname"]."' was successfully created.";
 						echo "</p>";
-						echo "<p><a href='buyer.php'>Return to buyer Page</a></p>";
+						echo "<p><a href='buyers.php'>Return to buyer Page</a></p>";
 					} else {
 						// If the insert failed
 						echo "<p>";
 						echo "Error: the buyer could not be inserted.";
 						echo "</p>";
-						echo "<p><a href='buyer.php'>Return to buyer Page</a></p>";
-					}
+						echo "<p><a href='buyers.php'>Return to buyer Page</a></p>";
+					}				
+					oci_free_statement($stmt);
 				}
 			?>
 		</div>
@@ -151,3 +151,9 @@ $conn = oci_connect($UName, $PWord, $DB)
 </body>
 </html>
 
+<<<<<<< HEAD
+=======
+<?php
+	oci_close($conn);
+?>
+>>>>>>> 692448bb2a22f132e687494b4d34b623b7980fe3
