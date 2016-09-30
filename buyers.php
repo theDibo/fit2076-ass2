@@ -5,7 +5,7 @@ include("checklogin.php");
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-<<<<<<< HEAD
+
 //=============
 define('FPDF_FONTPATH','FPDF/font/');
   require('FPDF/fpdf.php');
