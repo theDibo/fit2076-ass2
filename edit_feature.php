@@ -90,7 +90,7 @@ $row = oci_fetch_array($stmt);
 			<table align="center">
 				<tr>
 					<td><input type="submit" value="Update feature"></td>
-					<td><input type="button" value="Cancel" onclick="window.location='property_feature.php'"></td>
+					<td><input type="button" value="Cancel" onclick="window.location='feature.php'"></td>
 				</tr>
 			</table>
 			
@@ -116,13 +116,13 @@ $row = oci_fetch_array($stmt);
 				
 				// If edit was successful
 				echo "Update was successful.";
-				echo "<center><input type='button' value='Return' OnClick='window.location=\"property_feature.php\"'></center>";
+				echo "<center><input type='button' value='Return' OnClick='window.location=\"feature.php\"'></center>";
 				
 			} else {
 				
 				// If edit failed
 				echo "<p>There was an error updating the selected record.</p><br />";
-				echo "<center><input type='button' value='Return to List' OnClick='window.location=\"property_feature.php\"'></center>";
+				echo "<center><input type='button' value='Return to List' OnClick='window.location=\"feature.php\"'></center>";
 				
 			}
 					
@@ -151,7 +151,7 @@ $row = oci_fetch_array($stmt);
 			<table align="center">
 				<tr>
 					<td><input type="button" value="Delete feature" onclick="confirm_delete()"></td>
-					<td><input type="button" value="Cancel" onclick="window.location='property_feature.php'"></td>
+					<td><input type="button" value="Cancel" onclick="window.location='feature.php'"></td>
 				</tr>
 			</table>
 			
@@ -189,7 +189,7 @@ $row = oci_fetch_array($stmt);
 			echo "<center>Error deleting feature. Check that no listings use the feature.";
 		} 
 		echo "<center><input type='button' value='Return to List'
-OnClick='window.location=\"property_feature.php\"'>
+OnClick='window.location=\"feature.php\"'>
 </center>"; 
 			
 			break;
