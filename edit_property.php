@@ -304,29 +304,44 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 							if (!in_array($ext, $allowed)) {
 								// Output an error message
 								echo "<li><p>Error: could not upload file ".$_FILES["images"]["name"][$i]." - only JPG, JPEG, PNG and GIF files can be uploaded.</p></li>";
+								
 							} else {
+								
 								// Ensure that the filepath exists
 								if ($tmpFilePath != "") {
+									
+								// Chech the file size is less than 1mb
+								if (filesize($tmpFilePath) <= 1048576) {
+									
 
-									// Save the filename
-									$filename = date('d-m-Y-h-i-s').'--'.$_FILES["images"]["name"][$i];
+										// Save the filename
+										$filename = date('d-m-Y-h-i-s').'--'.$_FILES["images"]["name"][$i];
 
-									// Save the url and file
-									$filePath = "property_images/".$filename;
+										// Save the url and file
+										$filePath = "property_images/".$filename;
 
-									// Upload the file into the tmp dir
-									if (move_uploaded_file($tmpFilePath, $filePath)) {
+										// Upload the file into the tmp dir
+										if (move_uploaded_file($tmpFilePath, $filePath)) {
 
-										$files[] = $filename;
-										// insert into database
-										$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
-										$stmt = oci_parse($conn, $query);
-										oci_execute($stmt);
+											$files[] = $filename;
+											// insert into database
+											$query = "INSERT INTO Picture VALUES (picture_seq.nextval, '".$filename."', ".$_GET["id"].")";
+											$stmt = oci_parse($conn, $query);
+											oci_execute($stmt);
 
-										// Output that the file was successfully uploaded
-										echo "<li><p>Uploaded file ".$_FILES["images"]["name"][$i]." successfully.</p></li>";
-									}
+											// Output that the file was successfully uploaded
+											echo "<li><p>Uploaded file ".$_FILES["images"]["name"][$i]." successfully.</p></li>";
+										}
+									
+								} else {
+									
+									echo "<li><p>Error: could not upload file ".$_FILES["images"]["name"][$i]." - file too large (maximum filesize is 1mb).</p></li>";
+								
 								}
+							
+								}	
+									
+								
 							}
 						}
 					}
