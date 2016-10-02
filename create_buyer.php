@@ -151,9 +151,6 @@ $conn = oci_connect($UName, $PWord, $DB)
 </body>
 </html>
 
-<<<<<<< HEAD
-=======
 <?php
 	oci_close($conn);
 ?>
->>>>>>> 692448bb2a22f132e687494b4d34b623b7980fe3

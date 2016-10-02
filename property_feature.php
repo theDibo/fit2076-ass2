@@ -4,7 +4,6 @@ ob_start();
 
 include("checklogin.php");
 
-<<<<<<< HEAD
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
@@ -22,9 +21,6 @@ $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 }
 
-
-=======
->>>>>>> 692448bb2a22f132e687494b4d34b623b7980fe3
 ?>
 <html lang="en">
 <head>
@@ -69,3 +65,7 @@ oci_execute($stmt);
 </body>
 </html>
 
+<?php
+	oci_free_statement($stmt);
+	oci_close($conn);
+?>

@@ -8,7 +8,6 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-//=============
 define('FPDF_FONTPATH','FPDF/font/');
   require('FPDF/fpdf.php');
   
@@ -99,7 +98,7 @@ define('FPDF_FONTPATH','FPDF/font/');
   $pdf->AddPage('L');
   $pdf->FancyTable($header,$data);
   $pdf->Output("buyer_PDF.pdf");
-//============================================================================================================================================
+
 
 if (isset($_GET["search"]) && $_GET["search"] != "") {
 	// Something has been searched, get matching property records

@@ -8,7 +8,6 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-<<<<<<< HEAD
 if (isset($_GET["search"]) && $_GET["search"] != "") {
 	// Something has been searched, get matching property records
 	$query = "PropertyType.* FROM PropertyType WHERE lower(PropertyType.type_name) LIKE '%' || :search || '%' ORDER BY Property.type_id";
@@ -21,12 +20,6 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
     $stmt = oci_parse($conn, $query);
     oci_execute($stmt);
 }
-
-=======
-$query = "SELECT * FROM PropertyType ORDER BY type_id";
-$stmt = oci_parse($conn, $query);
-oci_execute($stmt);
->>>>>>> 692448bb2a22f132e687494b4d34b623b7980fe3
 
 ?>
 
