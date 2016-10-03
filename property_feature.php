@@ -4,19 +4,13 @@ ob_start();
 
 include("checklogin.php");
 
+include("getselect.php");
+
 include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-if (isset($_GET["search"]) && $_GET["search"] != "") {
-	// Something has been searched, get matching property records
-	$query = "* FROM Feature WHERE lower(FEATURE_NAME) LIKE '%' || :search || '%' ORDER BY Property.type_id";
-	$stmt = oci_parse($conn, $query);
-	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
-	oci_execute($stmt);
-} else {
-	// Nothing has been searched, get all property records
-	$query = "SELECT * FROM Feature ORDER BY FEATURE_ID";
+$query = "SELECT * FROM Feature ORDER BY FEATURE_ID";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
 }
@@ -53,6 +47,24 @@ oci_execute($stmt);
 		<div class="col-sm-8 text-left content-div">
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
 	  	  <h1 class="page-title">Property Feature Edit</h1>
+	  	  
+	  	  <?php
+			
+			// Display the property selection drop-down list
+			
+			
+			if (!isset($_GET["id"]) || $_GET["id"] = "") {
+				
+				// Display no form
+				
+			} else {
+				
+				// Display the feature selection form
+				
+			}
+			
+			?>
+	  	  
 		</div>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->

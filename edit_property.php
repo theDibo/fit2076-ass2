@@ -237,7 +237,7 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 			<br />
 			<p><input type="submit" name="submit" value="Upload" /></p>
 			</form>
-			<p>Note: Files must be in JPG, JPEG, PNG or GIF format.</p>
+			<p>Note: Files must be in JPG, JPEG, PNG or GIF format, and must be under 1mb size.</p>
 			<?php
 				
 			break;
@@ -293,12 +293,15 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 					echo "<ul>";
 					// Array storing the allowed file types
 					$allowed = array("gif", "png", "jpg", "jpeg");
+					
 					if (count($_FILES["images"]["name"]) > 0) {
+						
 						// Loop through the files and set the temp file path
 						for ($i=0; $i < count($_FILES["images"]["name"]); $i++) {
+							
 							// Save the temp file path
 							$tmpFilePath = $_FILES["images"]["tmp_name"][$i];
-							
+
 							// Check that the file is of an allowed extension
 							$ext = pathinfo($_FILES["images"]["name"][$i], PATHINFO_EXTENSION);
 							if (!in_array($ext, $allowed)) {
@@ -339,13 +342,16 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 								
 								}
 							
-								}	
-									
-								
 							}
 						}
+					} 
+					
+					} else {
+						echo "<li><p>Error: Maximum total upload size of 2MB was exceeded. Please compress images or upload them seperately.</p></li>";
 					}
 			echo "<a href='edit_property.php?id=".$_GET["id"]."&Action=Update'>Return to Property</a>";
+			echo "</ul>";
+					
 			break;
 			
 			// Delete Image Case
