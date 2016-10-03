@@ -149,16 +149,9 @@ oci_execute($stmt);
   	  
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_buyer.php" class="btn btn-default btn-md col-md-5">Create New Buyer</a>
-	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Email Buyers</a>
-	  </div>
-            
-             <div class="col-md-6 col-md-offset-2">
 	  <a href="buyers_email.php" class="btn btn-default btn-md col-md-5">Email subscribed mailers</a>
+     <a href="buyer_PDF.pdf" class="btn btn-default btn-md col-md-5">Generate pdf</a>
 	  </div>
-          
-        <div class="col-md-6 col-md-offset-2">    
-        <a href="buyer_PDF.pdf" class="btn btn-default btn-md col-md-5">Generate pdf</a>
-            </div>
             
             
 	  	  <table border="1" align="center" class="display-table">

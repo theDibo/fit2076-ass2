@@ -61,7 +61,7 @@ define('FPDF_FONTPATH','FPDF/font/');
   include("connection.php");
   $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
-  $query="SELECT * FROM SELLER ORDER BY BUYER_FNAME";
+  $query="SELECT * FROM SELLER ORDER BY SELLER_FNAME";
   $stmt = oci_parse($conn,$query);
   oci_execute($stmt);
   
@@ -97,7 +97,7 @@ define('FPDF_FONTPATH','FPDF/font/');
   $pdf->SetFont('Arial','',9);
   $pdf->AddPage('L');
   $pdf->FancyTable($header,$data);
-  $pdf->Output("buyer_PDF.pdf");
+  $pdf->Output("seller_PDF.pdf");
 
 
 if (isset($_GET["search"]) && $_GET["search"] != "") {
@@ -150,16 +150,10 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
   	  
   	  <div class="col-md-6 col-md-offset-2">
 	  <a href="create_seller.php" class="btn btn-default btn-md col-md-5">Create New Seller</a>
-	  <a href="sellers_email.php" class="btn btn-default btn-md col-md-5">Email Sellers</a>
-	  </div>
-            
-        <div class="col-md-6 col-md-offset-2">
 	  <a href="sellers_email.php" class="btn btn-default btn-md col-md-5">Email subscribed mailers</a>
+          <a href="seller_PDF.pdf" class="btn btn-default btn-md col-md-5">Generate pdf</a>
 	  </div>
             
-             <div class="col-md-6 col-md-offset-2">    
-        <a href="seller_PDF.pdf" class="btn btn-default btn-md col-md-5">Generate pdf</a>
-            </div>
   	  
 	  	  <table border="1" align="center" class="display-table">
 	
