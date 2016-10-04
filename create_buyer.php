@@ -146,6 +146,8 @@ $conn = oci_connect($UName, $PWord, $DB)
 	</div>
 </div>
 
+<a href="display_source.php?page=create_buyer.php" target="_blank"><img src="images/client.png" alt="client"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

@@ -112,6 +112,8 @@ oci_execute($stmt);
 	</div>
 </div>
 
+<a href="display_source.php?page=sellers_email.php" target="_blank"><img src="images/client.png" alt="client"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

@@ -287,6 +287,8 @@ OnClick='window.location=\"buyers.php\"'>
 	</div>
 </div>
 
+<a href="display_source.php?page=edit_buyer.php" target="_blank"><img src="images/client.png" alt="client"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

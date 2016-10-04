@@ -196,6 +196,8 @@ oci_execute($stmt);
 	</div>
 </div>
 
+<a href="display_source.php?page=create_property.php" target="_blank"><img src="images/property.png" alt="property"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

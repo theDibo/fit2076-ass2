@@ -202,6 +202,8 @@ OnClick='window.location=\"property_type.php\"'>
 	</div>
 </div>
 
+<a href="display_source.php?page=edit_type.php" target="_blank"><img src="images/type.png" alt="type"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

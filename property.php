@@ -138,6 +138,8 @@ if (isset($_GET["search"]) && $_GET["search"] != "") {
 	</div>
 </div>
 
+<a href="display_source.php?page=property.php" target="_blank"><img src="images/property.png" alt="property"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

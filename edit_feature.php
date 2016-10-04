@@ -204,6 +204,8 @@ OnClick='window.location=\"feature.php\"'>
 	</div>
 </div>
 
+<a href="display_source.php?page=edit_feature.php" target="_blank"><img src="images/feature.png" alt="feature"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

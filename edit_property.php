@@ -549,6 +549,8 @@ $imagedir = dirname($_SERVER["SCRIPT_FILENAME"])."/property_images";
 	</div>
 </div>
 
+<a href="display_source.php?page=edit_property.php" target="_blank"><img src="images/property.png" alt="property"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

@@ -108,6 +108,8 @@ $conn = oci_connect($UName, $PWord, $DB)
 	</div>
 </div>
 
+<a href="display_source.php?page=create_feature.php" target="_blank"><img src="images/feature.png" alt="feature"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

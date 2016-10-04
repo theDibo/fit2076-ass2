@@ -89,6 +89,8 @@ oci_execute($stmt);
 	</div>
 </div>
 
+<a href="display_source.php?page=feature.php" target="_blank"><img src="images/feature.png" alt="feature"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

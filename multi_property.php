@@ -129,6 +129,8 @@ oci_execute($stmt);
 	</div>
 </div>
 
+<a href="display_source.php?page=multi_property.php" target="_blank"><img src="images/multiple_property.png" alt="multiple property"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>

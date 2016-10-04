@@ -152,6 +152,8 @@ $dir = opendir($imagedir);
 	</div>
 </div>
 
+<a href="display_source.php?page=images.php" target="_blank"><img src="images/images.png" alt="images"/></a>
+
 <?php include("footer.php"); ?>
 
 </body>
