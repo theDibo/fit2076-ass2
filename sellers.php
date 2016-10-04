@@ -99,21 +99,10 @@ define('FPDF_FONTPATH','FPDF/font/');
   $pdf->FancyTable($header,$data);
   $pdf->Output("seller_PDF.pdf");
 
-
-if (isset($_GET["search"]) && $_GET["search"] != "") {
-	// Something has been searched, get matching property records
-	$query = "SELECT* FROM SELLER WHERE lower(SELLER_FNAME) LIKE '%' || :search || '%' OR lower(SELLER_LNAME) LIKE '%' || :search || '%' OR lower(SELLER_ADDRESS) LIKE '%' || :search || '%' OR lower(SELLER_SUBURB) LIKE '%' || :search || '%' OR lower(SELLER_STATE) LIKE '%' || :search || '%' ORDER BY SELLER_ID";
-	$stmt = oci_parse($conn, $query);
-	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
-	oci_execute($stmt);
-} else {
-	// Nothing has been searched, get all property records
-	$query = "SELECT * FROM Seller ORDER BY SELLER_ID";
-    $stmt = oci_parse($conn, $query);
-    oci_execute($stmt);
-}
-
-
+// Nothing has been searched, get all property records
+$query = "SELECT * FROM Seller ORDER BY SELLER_ID";
+$stmt = oci_parse($conn, $query);
+oci_execute($stmt);
 
 ?>
 

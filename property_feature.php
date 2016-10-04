@@ -179,6 +179,7 @@ oci_execute($stmt);
 				
 				// If there are no checked boxes, then skip this
 				if (isset($_POST["check"])) {
+					
 					foreach($_POST["check"] as $feature) {
 
 						$query = "INSERT INTO PropertyFeature VALUES (".$_POST["id"].", :feature)";
