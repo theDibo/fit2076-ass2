@@ -13,7 +13,6 @@ $conn = oci_connect($UName, $PWord, $DB)
 $query = "SELECT * FROM Feature ORDER BY FEATURE_ID";
 $stmt = oci_parse($conn, $query);
 oci_execute($stmt);
-}
 
 ?>
 <html lang="en">
@@ -51,15 +50,61 @@ oci_execute($stmt);
 	  	  <?php
 			
 			// Display the property selection drop-down list
+			?>
 			
-			
-			if (!isset($_GET["id"]) || $_GET["id"] = "") {
+			<form method="get" action="property_feature.php">
 				
-				// Display no form
+				<table align="center" class="edit-table">
+				
+				<tr>
+					<th>Select Property</th>
+					<td>
+						<select name="id">
+						
+						<option value="">Select a property...</option>
+						
+						<?php
+							// Select all Property records
+							$query = "SELECT * FROM Property ORDER BY type_id";
+							$stmt = oci_parse($conn, $query);
+							oci_execute($stmt);	
+
+							while ($row = oci_fetch_array($stmt)) {
+							?>
+
+								<option value="<?php echo $row["PROPERTY_ID"]; ?>" 
+								<?php // If there is an id set, use getselect
+								if (isset($_GET["id"])) {
+								echo getselect($_GET["id"], $row["PROPERTY_ID"]); 
+									} ?>>
+								<?php echo $row["PROPERTY_ADDRESS"]; ?>
+								</option>
+
+							<?php	
+							}
+							?>
+
+					</select>
+					</td>
+					<td>
+						<input type="submit" value="Go" />
+					</td>
+				</tr>
+				
+				</table>
+				
+			</form>
+			
+			<?php
+			
+			if (isset($_GET["id"]) && $_GET["id"] != "") {
+				
+				// Display the feature selection form
 				
 			} else {
 				
-				// Display the feature selection form
+				// No property has been selected
+				echo "<p>Please select a property to edit.</p>";
 				
 			}
 			
