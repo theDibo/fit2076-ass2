@@ -42,6 +42,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
 		  <h1 class="page-title">Ruthless Real Estate - Employee Portal</h1>
 		  <p>Welcome to the employee portal for Ruthless Real Estate. Here you can access the functionality you need to manage your business. Use the buttons in the above navigation bar to access the different sections of the system.</p>
+		  <br />
+		  <p>At the bottom of each page you will find an image which, when clicked, will open a new tab displaying the source code of that page.</p>
 		</div>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
