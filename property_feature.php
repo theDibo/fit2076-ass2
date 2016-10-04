@@ -10,9 +10,10 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-$query = "SELECT * FROM Feature ORDER BY FEATURE_ID";
+// Select all Property records
+$query = "SELECT * FROM Property ORDER BY type_id";
 $stmt = oci_parse($conn, $query);
-oci_execute($stmt);
+oci_execute($stmt);	
 
 ?>
 <html lang="en">
@@ -49,6 +50,8 @@ oci_execute($stmt);
 	  	  
 	  	  <?php
 			
+			if (!isset($_POST["id"])) {
+			
 			// Display the property selection drop-down list
 			?>
 			
@@ -64,10 +67,6 @@ oci_execute($stmt);
 						<option value="">Select a property...</option>
 						
 						<?php
-							// Select all Property records
-							$query = "SELECT * FROM Property ORDER BY type_id";
-							$stmt = oci_parse($conn, $query);
-							oci_execute($stmt);	
 
 							while ($row = oci_fetch_array($stmt)) {
 							?>
@@ -101,10 +100,61 @@ oci_execute($stmt);
 				
 				// Display the feature selection form
 				
+				?>
+				
+				<form method="get" action="property_feature.php">
+				
+				<table align="center" cellpadding="3" class="edit-table">
+				
+				<tr>
+					<th>Feature</th>
+					<th>Select</th>
+				</tr>
+				
+				<?php
+					
+					// Select all Feature records
+					$query = "SELECT * FROM Feature ORDER BY FEATURE_NAME";
+					$stmt = oci_parse($conn, $query);
+					oci_execute($stmt);
+				
+					while ($row = oci_fetch_array($stmt)) {
+						
+						?>
+						
+						<tr>
+							
+							<td><?php echo $row["FEATURE_NAME"]; ?></td>
+							<td><input type='checkbox' name='check[]' value='<?php echo $row["FEATURE_ID"]; ?>'></td>
+							
+						</tr>
+						
+						<?php
+						
+					}
+				?>
+				
+				</table>
+					
+				</form>
+				
+				<?php
+				
 			} else {
 				
 				// No property has been selected
 				echo "<p>Please select a property to edit.</p>";
+				
+			}
+			
+			} else {
+				
+				// Update the records
+				
+				// First delete all existing PropertyFeature records for the property
+				$query = "DELETE FROM PropertyFeature WHERE property_id = ".$_POST["id"];
+				$stmt = oci_parse($conn, $query);
+				oci_execute($stmt);
 				
 			}
 			
