@@ -102,7 +102,9 @@ oci_execute($stmt);
 				
 				?>
 				
-				<form method="get" action="property_feature.php">
+				<form method="post" action="property_feature.php">
+				
+				<input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>" />
 				
 				<table align="center" cellpadding="3" class="edit-table">
 				
@@ -125,7 +127,17 @@ oci_execute($stmt);
 						<tr>
 							
 							<td><?php echo $row["FEATURE_NAME"]; ?></td>
-							<td><input type='checkbox' name='check[]' value='<?php echo $row["FEATURE_ID"]; ?>'></td>
+							<td><input type='checkbox' name='check[]' value='<?php echo $row["FEATURE_ID"]; ?>'
+							<?php
+								// If the PropertyFeature record exists, make the box checked
+								$query2 = "SELECT * FROM PropertyFeature WHERE property_id = ".$_GET["id"]." AND feature_id = ".$row["FEATURE_ID"];
+								$stmt2 = oci_parse($conn, $query2);
+								oci_execute($stmt2);
+								
+								if ($row = oci_fetch_array($stmt2)) {
+									echo "checked";
+								}
+						   	?> /></td>
 							
 						</tr>
 						
@@ -135,6 +147,13 @@ oci_execute($stmt);
 				?>
 				
 				</table>
+				
+				<table align="center">
+				<tr>
+					<td><input type="submit" value="Update Property"></td>
+					<td><input type="button" value="Cancel" onclick="window.location='property_feature.php'"></td>
+				</tr>
+			</table>
 					
 				</form>
 				
@@ -155,6 +174,23 @@ oci_execute($stmt);
 				$query = "DELETE FROM PropertyFeature WHERE property_id = ".$_POST["id"];
 				$stmt = oci_parse($conn, $query);
 				oci_execute($stmt);
+				
+				// Then add new records for each selected checkbox
+				
+				// If there are no checked boxes, then skip this
+				if (isset($_POST["check"])) {
+					foreach($_POST["check"] as $feature) {
+
+						$query = "INSERT INTO PropertyFeature VALUES (".$_POST["id"].", :feature)";
+						$stmt = oci_parse($conn, $query);
+						oci_bind_by_name($stmt, ":feature", $feature);
+						oci_execute($stmt);
+
+					}
+				}
+				
+				echo "<p>Property features were updated.</p>";
+				echo "<a href='property_feature.php?id=".$_POST["id"]."'>Return to Property Features</a>";
 				
 			}
 			

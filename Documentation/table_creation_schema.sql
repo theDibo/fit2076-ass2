@@ -112,7 +112,6 @@ NOCACHE;
 CREATE TABLE PropertyFeature (
 property_id INTEGER NOT NULL,
 feature_id INTEGER NOT NULL,
-quantity INTEGER NOT NULL,
 CONSTRAINT PK_PropertyFeature PRIMARY KEY (property_id, feature_id),
 CONSTRAINT FK_PropertyFeature_property FOREIGN KEY (property_id) 
 REFERENCES Property(property_id),

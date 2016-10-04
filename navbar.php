@@ -14,8 +14,8 @@
         <li><a href="property.php">Properties</a></li>
         <li><a href="property_feature.php">Property Feature</a></li>
         <li><a href="multi_property.php">Multiple Property Edit</a></li>
-        <li><a href="property_type.php">Property Types</a></li>
-        <li><a href="feature.php">Property Features</a></li>
+        <li><a href="property_type.php">Types</a></li>
+        <li><a href="feature.php">Features</a></li>
         <li><a href="buyers.php">Buyers</a></li>
         <li><a href="sellers.php">Sellers</a></li>
         <li><a href="images.php">Images</a></li>
