@@ -76,11 +76,11 @@ $row = oci_fetch_array($stmt);
 				</tr>
 				<tr>
 					<td><b><label for="name">Name</label></b></td>
-					<td><input type="text" name="name" size="30" value="<?php echo $row["FEATURE_NAME"]; ?>" required></td>
+					<td><input type="text" name="fname" size="30" value="<?php echo $row["FEATURE_NAME"]; ?>" required></td>
 				</tr>
 				<tr>
 					<td><b><label for="desc">Description</label></b></td>
-					<td><input type="text" name="desc" size="250" value="<?php echo $row["FEATURE_DESC"]; ?>"></td>
+					<td><textarea cols="68" name="fdesc" rows="10" size="250"> </textarea></td>
 				</tr>
                
 			
@@ -108,10 +108,10 @@ $row = oci_fetch_array($stmt);
 			// Confirm Update Case
 			case "ConfirmUpdate":
 					
-			$query = "UPDATE feature set FEATURE_NAME = '".$_POST["name"]."', FEATURE_DESC = '".$_POST["desc"]."' WHERE FEATURE_ID=".$_GET["id"];
+			$query = "UPDATE feature set FEATURE_NAME = :fname, FEATURE_DESC = :fdesc WHERE FEATURE_ID=".$_GET["id"];
 			$stmt = oci_parse($conn, $query);
-			oci_bind_by_name($stmt, ":name", $_POST["name"]);
-            oci_bind_by_name($stmt, ":desc", $_POST["desc"]);
+			oci_bind_by_name($stmt, ":fname", $_POST["fname"]);
+            oci_bind_by_name($stmt, ":fdesc", $_POST["fdesc"]);
 			if (@oci_execute($stmt)) {
 				
 				// If edit was successful
@@ -203,8 +203,6 @@ OnClick='window.location=\"feature.php\"'>
 		</div>
 	</div>
 </div>
-
-<a href="display_source.php?page=edit_feature.php" target="_blank"><img src="images/feature.png" alt="feature"/></a>
 
 <?php include("footer.php"); ?>
 
