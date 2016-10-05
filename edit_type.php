@@ -76,11 +76,11 @@ $row = oci_fetch_array($stmt);
 				</tr>
 				<tr>
 					<td><b><label for="name">Type Name</label></b></td>
-					<td><input type="text" name="name" size="30" value="<?php echo $row["TYPE_NAME"]; ?>" required></td>
+					<td><input type="text" name="tname" size="30" value="<?php echo $row["TYPE_NAME"]; ?>" required></td>
 				</tr>
 				<tr>
 					<td><b><label for="desc">Description</label></b></td>
-					<td><input type="text" name="desc" size="150" value="<?php echo $row["TYPE_DESC"]; ?>"></td>
+					<td><textarea cols="68" name="tdesc" rows="10" size="150"> </textarea></td>
 				</tr>
 			
 			</table><br />
@@ -107,8 +107,12 @@ $row = oci_fetch_array($stmt);
 			// Confirm Update Case
 			case "ConfirmUpdate":
 					
-			$query = "UPDATE propertyType set TYPE_NAME = '".$_POST["name"]."', TYPE_DESC = '".$_POST["desc"]."' WHERE TYPE_ID=".$_GET["id"];
+			$query = "UPDATE propertyType set TYPE_NAME = :tname, TYPE_DESC = :tdesc WHERE TYPE_ID=".$_GET["id"];
+                
+                
 			$stmt = oci_parse($conn, $query);
+                oci_bind_by_name($stmt, ":tname", $_POST["tname"]);
+            oci_bind_by_name($stmt, ":tdesc", $_POST["tdesc"]);
 			if (@oci_execute($stmt)) {
 				
 				// If edit was successful
@@ -201,8 +205,6 @@ OnClick='window.location=\"property_type.php\"'>
 		</div>
 	</div>
 </div>
-
-<a href="display_source.php?page=edit_type.php" target="_blank"><img src="images/type.png" alt="type"/></a>
 
 <?php include("footer.php"); ?>
 

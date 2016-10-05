@@ -54,11 +54,11 @@ $conn = oci_connect($UName, $PWord, $DB)
 			<table align="center" cellpadding="3">
 				<tr>
 					<td><b><label for="name">Type Name</label></b></td>
-					<td><input type="text" name="name" size="30" required></td>
+					<td><input type="text" name="tname" size="30" required></td>
 				</tr>
 				<tr>
 					<td><b><label for="desc">Description</label></b></td>
-					<td><input type="text" name="desc" size="150"></td>
+					<td><textarea cols="68" name="tdesc" rows="10" size="150"></textarea></td>
 				</tr>
 			</table><br />
 			</fieldset>
@@ -81,9 +81,11 @@ $conn = oci_connect($UName, $PWord, $DB)
 				} else {
 					// Else, try to create the type
 	
-					$query = "INSERT INTO PropertyType VALUES (propertytype_seq.nextval, '".$_POST["name"]."', '".$_POST["desc"]."')";
+					$query = "INSERT INTO PropertyType VALUES (propertytype_seq.nextval, :tname, :tdesc)";
 					$stmt = oci_parse($conn, $query);
-					
+                    
+					oci_bind_by_name($stmt, ":tname", $_POST["tname"]);
+                    oci_bind_by_name($stmt, ":tdesc", $_POST["tdesc"]);
                     
 					if (@oci_execute($stmt)) {
 						// If the insert was successful
@@ -98,8 +100,10 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "</p>";
 						echo "<p><a href='property_type.php'>Return to type Page</a></p>";
 					}
-            	oci_free_statement($stmt);
+                    oci_free_statement($stmt);
+                    oci_close($conn);
 				}
+                    
 			?>
 		</div>
 		<div class="col-sm-2 sidenav">
@@ -108,14 +112,8 @@ $conn = oci_connect($UName, $PWord, $DB)
 	</div>
 </div>
 
-<a href="display_source.php?page=create_type.php" target="_blank"><img src="images/type.png" alt="type"/></a>
-
 <?php include("footer.php"); ?>
 
 </body>
 </html>
 
-
-<?php
-	oci_close($conn);
-?>

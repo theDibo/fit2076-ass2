@@ -53,11 +53,11 @@ $conn = oci_connect($UName, $PWord, $DB)
 			<table align="center" cellpadding="3">
 				<tr>
 					<td><b><label for="name">Name</label></b></td>
-					<td><input type="text" name="name" size="30" required></td>
+					<td><input type="text" name="fname" size="30" required></td>
 				</tr>
 				<tr>
 					<td><b><label for="desc">Description</label></b></td>
-					<td><input type="text" name="desc" size="250"></td>
+					<td><textarea cols="68" name="fdesc" rows="10" size="250"> </textarea></td>
 				</tr>
 				
 			</table><br />
@@ -79,8 +79,10 @@ $conn = oci_connect($UName, $PWord, $DB)
 	  	  	<?php
 				} else {
 					// Else, try to create the Feature
-					$query = "INSERT INTO Feature VALUES (feature_seq.nextval, '".$_POST["name"]."', '".$_POST["desc"]."')";
+					$query = "INSERT INTO Feature VALUES (feature_seq.nextval, :fname, :fdesc)";
 					$stmt = oci_parse($conn, $query);
+                    oci_bind_by_name($stmt, ":fname", $_POST["fname"]);
+                    oci_bind_by_name($stmt, ":fdesc", $_POST["fdesc"]);
 					
 					if (@oci_execute($stmt)) {
 						// If the insert was successful
@@ -88,6 +90,7 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "The Feature '".$_POST["name"]."' was successfully created.";
 						echo "</p>";
 						echo "<p><a href='feature.php'>Return to Feature Page</a></p>";
+            
 					} else {
 						// If the insert failed
 						echo "<p>";
@@ -95,20 +98,17 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "</p>";
 						echo "<p><a href='feature.php'>Return to Feature Page</a></p>";
 					}
+             oci_free_statement($stmt);
+            oci_close($conn);
 				}
 			?>
 		</div>
-        <?php
-            oci_free_statement($stmt);
-            oci_close($conn);
-        ?>
+        
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
 		</div>
 	</div>
 </div>
-
-<a href="display_source.php?page=create_feature.php" target="_blank"><img src="images/feature.png" alt="feature"/></a>
 
 <?php include("footer.php"); ?>
 
