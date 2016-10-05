@@ -62,7 +62,7 @@ $dir = opendir($imagedir);
 	  	  		</tr>
 	  	  		
 	  	  		<?php
-				$imageext = array("jpg", "png", "gif");
+				$imageext = array("jpg", "jpeg", "png", "gif");
 				
 				$results = false;
 				

@@ -1,2 +1,0 @@
-Add image deletion to property deletion
-Remember to use oci_bind_by_name to prevent SQL injection

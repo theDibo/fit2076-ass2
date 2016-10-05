@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "BUYER_ID"; }
+td:nth-of-type(1):before { content: "BUYER_FNAME"; }
+td:nth-of-type(2):before { content: "BUYER_LNAME"; }
+td:nth-of-type(3):before { content: "BUYER_ADDRESS"; }
+td:nth-of-type(4):before { content: "BUYER_SUBURB"; }
+td:nth-of-type(5):before { content: "BUYER_STATE"; }
+td:nth-of-type(6):before { content: "BUYER_PHONE"; }
+td:nth-of-type(7):before { content: "BUYER_MOBILE"; }
+td:nth-of-type(8):before { content: "BUYER_EMAIL"; }
+td:nth-of-type(9):before { content: "BUYER_MAILING"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Buyer</h1> 
+<table><thead><tr>	<th>BUYER_ID</th>
+	<th>BUYER_FNAME</th>
+	<th>BUYER_LNAME</th>
+	<th>BUYER_ADDRESS</th>
+	<th>BUYER_SUBURB</th>
+	<th>BUYER_STATE</th>
+	<th>BUYER_PHONE</th>
+	<th>BUYER_MOBILE</th>
+	<th>BUYER_EMAIL</th>
+	<th>BUYER_MAILING</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>Lena</td>
+<td>Oxton</td>
+<td>6 Speedy Lane</td>
+<td>Ormond</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0436454656</td>
+<td>loxton@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>Jamison</td>
+<td>Fawkes</td>
+<td>51 Rough Street</td>
+<td>Frankston</td>
+<td>VIC</td>
+<td>0387569887</td>
+<td>&nbsp;</td>
+<td>jfawkes@omail.com</td>
+<td>N</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td>Mei-Ling</td>
+<td>Zhou</td>
+<td>3/64 Frosty Drive</td>
+<td>North Melbourne</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0498561324</td>
+<td>mzhou@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td>Amelie</td>
+<td>Lacroix</td>
+<td>2 Scope Street</td>
+<td>Bentleigh</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0498565678</td>
+<td>alacroix@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td>Mako</td>
+<td>Rutledge</td>
+<td>51 Rough Street</td>
+<td>Frankston</td>
+<td>VIC</td>
+<td>0387569887</td>
+<td>&nbsp;</td>
+<td>mrutledge@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">6</td>
+<td>Markus</td>
+<td>Makers</td>
+<td>11 Road Street</td>
+<td>Frankston</td>
+<td>VIC</td>
+<td>0398565151</td>
+<td>&nbsp;</td>
+<td>makeme@gmail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">7</td>
+<td>Fisherman</td>
+<td>Phil</td>
+<td>13 Ocean Way</td>
+<td>Black Rock</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0436785454</td>
+<td>atchme@mail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">8</td>
+<td>Sheldon</td>
+<td>Scully</td>
+<td>64 Street Parade</td>
+<td>Brunswick</td>
+<td>VIC</td>
+<td>0398765454</td>
+<td>&nbsp;</td>
+<td>scullboi@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td>Barry</td>
+<td>Bartledge</td>
+<td>123 High Road</td>
+<td>Bacchus March</td>
+<td>VIC</td>
+<td>0398321654</td>
+<td>&nbsp;</td>
+<td>bazzaaa@pmail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">10</td>
+<td>Thomas</td>
+<td>Tankeng</td>
+<td>51 Sodor Avenue</td>
+<td>Clayton</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0487565323</td>
+<td>peeppeep@smail.com</td>
+<td>Y</td>
+	</tr>
+</tbody></table><!-- SQL:
+select BUYER_ID BUYER_ID, BUYER_FNAME BUYER_FNAME, BUYER_LNAME BUYER_LNAME, BUYER_ADDRESS BUYER_ADDRESS, BUYER_SUBURB BUYER_SUBURB, BUYER_STATE BUYER_STATE, BUYER_PHONE BUYER_PHONE, BUYER_MOBILE BUYER_MOBILE, BUYER_EMAIL BUYER_EMAIL, BUYER_MAILING BUYER_MAILING from (select * from "S26913224"."BUYER")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "FEATURE_ID"; }
+td:nth-of-type(1):before { content: "FEATURE_NAME"; }
+td:nth-of-type(2):before { content: "FEATURE_DESC"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Feature</h1> 
+<table><thead><tr>	<th>FEATURE_ID</th>
+	<th>FEATURE_NAME</th>
+	<th>FEATURE_DESC</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>Tennis Court</td>
+<td>A large court for playing tennis</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>Swimming Pool - Above Ground</td>
+<td>An above-ground pool for swimming in</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td>Swimming Pool - Below Ground</td>
+<td>A below-ground pool for swimming in</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td>Wine Cellar</td>
+<td>A specialised room for storing wine</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td>Helipad</td>
+<td>A landing pad for helicopters</td>
+	</tr>
+	<tr>
+<td align="right">6</td>
+<td>Showroom</td>
+<td>An open room for displaying items to customers</td>
+	</tr>
+</tbody></table><!-- SQL:
+select FEATURE_ID FEATURE_ID, FEATURE_NAME FEATURE_NAME, FEATURE_DESC FEATURE_DESC from (select * from "S26913224"."FEATURE")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "LISTING_ID"; }
+td:nth-of-type(1):before { content: "SELLER_ID"; }
+td:nth-of-type(2):before { content: "PROPERTY_ID"; }
+td:nth-of-type(3):before { content: "LISTING_DESC"; }
+td:nth-of-type(4):before { content: "LISTING_DATE"; }
+td:nth-of-type(5):before { content: "LISTING_PRICE"; }
+td:nth-of-type(6):before { content: "SALE_DATE"; }
+td:nth-of-type(7):before { content: "SALE_PRICE"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Listing</h1> 
+<table><thead><tr>	<th>LISTING_ID</th>
+	<th>SELLER_ID</th>
+	<th>PROPERTY_ID</th>
+	<th>LISTING_DESC</th>
+	<th>LISTING_DATE</th>
+	<th>LISTING_PRICE</th>
+	<th>SALE_DATE</th>
+	<th>SALE_PRICE</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">1</td>
+<td>This house is beautiful, located in Bentleigh.</td>
+<td>22/OCT/16</td>
+<td align="right">1200000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td>This is an ideal location for starting your small business!</td>
+<td>20/OCT/16</td>
+<td align="right">800000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td>A beautiful apartment for a couple to move into, or a great place to call your own!</td>
+<td>05/OCT/16</td>
+<td align="right">350000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td>This factory is in a great spot.</td>
+<td>20/OCT/16</td>
+<td align="right">780000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td>This warehouse is an ideal location for a business to grow.</td>
+<td>14/DEC/16</td>
+<td align="right">1200000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">6</td>
+<td>An empty warehouse, available for commercial and industrial purposes</td>
+<td>05/OCT/16</td>
+<td align="right">400000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">7</td>
+<td align="right">10</td>
+<td align="right">7</td>
+<td>Ideal for a small family, this apartment has a gorgeous view.</td>
+<td>08/NOV/16</td>
+<td align="right">450000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">8</td>
+<td align="right">7</td>
+<td align="right">8</td>
+<td>A small house located at Springvale, with its position close to all utilities, including a supermarket and Springvale train station</td>
+<td>05/OCT/16</td>
+<td align="right">425000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td align="right">2</td>
+<td align="right">9</td>
+<td>This spacious home is ideal for a large family looking for the room they need to live their lives together!</td>
+<td>13/OCT/16</td>
+<td align="right">1400000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+	<tr>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td>2-storey townhouse located at the peaceful suburb of Hampton East, close to the Nepean Highway and Moorabin train station</td>
+<td>05/OCT/16</td>
+<td align="right">700000</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+	</tr>
+</tbody></table><!-- SQL:
+select LISTING_ID LISTING_ID, SELLER_ID SELLER_ID, PROPERTY_ID PROPERTY_ID, LISTING_DESC LISTING_DESC, LISTING_DATE LISTING_DATE, LISTING_PRICE LISTING_PRICE, SALE_DATE SALE_DATE, SALE_PRICE SALE_PRICE from (select * from "S26913224"."LISTING")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "PIC_ID"; }
+td:nth-of-type(1):before { content: "PIC_NAME"; }
+td:nth-of-type(2):before { content: "PROPERTY_ID"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ 
+<table><thead><tr>	<th>PIC_ID</th>
+	<th>PIC_NAME</th>
+	<th>PROPERTY_ID</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>05-10-2016-11-17-08--home-clip-art-RcAEjzpcL.jpeg</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>05-10-2016-11-31-41--the_cloud_factory_01.jpg</td>
+<td align="right">4</td>
+	</tr>
+</tbody></table><!-- SQL:
+select PIC_ID PIC_ID, PIC_NAME PIC_NAME, PROPERTY_ID PROPERTY_ID from (select * from "S26913224"."PICTURE")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "PROPERTY_ID"; }
+td:nth-of-type(1):before { content: "PROPERTY_ADDRESS"; }
+td:nth-of-type(2):before { content: "PROPERTY_SUBURB"; }
+td:nth-of-type(3):before { content: "TYPE_ID"; }
+td:nth-of-type(4):before { content: "PROPERTY_BEDROOMS"; }
+td:nth-of-type(5):before { content: "PROPERTY_BATHROOMS"; }
+td:nth-of-type(6):before { content: "PROPERTY_CARPARKS"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Property</h1> 
+<table><thead><tr>	<th>PROPERTY_ID</th>
+	<th>PROPERTY_ADDRESS</th>
+	<th>PROPERTY_SUBURB</th>
+	<th>TYPE_ID</th>
+	<th>PROPERTY_BEDROOMS</th>
+	<th>PROPERTY_BATHROOMS</th>
+	<th>PROPERTY_CARPARKS</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>123 Center Road</td>
+<td>Bentleigh</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>23 North Road</td>
+<td>Ormond</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td>3a/34 Crest Avenue</td>
+<td>McKinnon</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td>65 Street Road</td>
+<td>Frankston</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">4</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td>49 Large Road</td>
+<td>Clayton</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td align="right">6</td>
+<td>2 Kingston Way</td>
+<td>Albion</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">7</td>
+	</tr>
+	<tr>
+<td align="right">7</td>
+<td>4/232 Center Road</td>
+<td>Bentleigh</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">2</td>
+	</tr>
+	<tr>
+<td align="right">8</td>
+<td>2/19 Ash Grove</td>
+<td>Springvale</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">2</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td>54 Vintage Street</td>
+<td>Brunswick</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">4</td>
+	</tr>
+	<tr>
+<td align="right">10</td>
+<td>15 Charming Street</td>
+<td>Hampton East</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">2</td>
+	</tr>
+</tbody></table><!-- SQL:
+select PROPERTY_ID PROPERTY_ID, PROPERTY_ADDRESS PROPERTY_ADDRESS, PROPERTY_SUBURB PROPERTY_SUBURB, TYPE_ID TYPE_ID, PROPERTY_BEDROOMS PROPERTY_BEDROOMS, PROPERTY_BATHROOMS PROPERTY_BATHROOMS, PROPERTY_CARPARKS PROPERTY_CARPARKS from (select * from "S26913224"."PROPERTY")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "PROPERTY_ID"; }
+td:nth-of-type(1):before { content: "FEATURE_ID"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Property-Feature</h1> 
+<table><thead><tr>	<th>PROPERTY_ID</th>
+	<th>FEATURE_ID</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td align="right">4</td>
+	</tr>
+	<tr>
+<td align="right">1</td>
+<td align="right">5</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td align="right">1</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td align="right">6</td>
+	</tr>
+	<tr>
+<td align="right">7</td>
+<td align="right">2</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td align="right">3</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td align="right">4</td>
+	</tr>
+</tbody></table><!-- SQL:
+select PROPERTY_ID PROPERTY_ID, FEATURE_ID FEATURE_ID from (select * from "S26913224"."PROPERTYFEATURE")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "TYPE_ID"; }
+td:nth-of-type(1):before { content: "TYPE_NAME"; }
+td:nth-of-type(2):before { content: "TYPE_DESC"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+ <h1>Type</h1> 
+<table><thead><tr>	<th>TYPE_ID</th>
+	<th>TYPE_NAME</th>
+	<th>TYPE_DESC</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>House</td>
+<td>A house in a residential area.</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>Apartment</td>
+<td>An apartment in a residential area.</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td>Shop</td>
+<td>A shopfront in a commercial area.</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td>Factory</td>
+<td>A factory in an industrial area.</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td>Warehouse</td>
+<td>A warehouse in an industrial area.</td>
+	</tr>
+</tbody></table><!-- SQL:
+select TYPE_ID TYPE_ID, TYPE_NAME TYPE_NAME, TYPE_DESC TYPE_DESC from (select * from "S26913224"."PROPERTYTYPE")--></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='Cp1252'>
+  
+  <title>Responsive Table</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <style>
+  * { 
+    margin: 0; 
+    padding: 0; 
+  }
+  body { 
+    font: 14px/1.4 Georgia, Serif; 
+  }
+  
+  /* 
+  Generic Styling, for Desktops/Laptops 
+  */
+  table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  th { 
+    background: #333; 
+    color: white; 
+    font-weight: bold; 
+  }
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #9B9B9B; 
+    text-align: left; 
+  }
+  @media 
+  only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px)  {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute;top: -9999px;left: -9999px;}
+    tr { border: 1px solid #9B9B9B; }
+    td { border: none;border-bottom: 1px solid #9B9B9B; position: relative;padding-left: 50%; }
+    
+    td:before { position: absolute;top: 6px;left: 6px;width: 45%; padding-right: 10px; white-space: nowrap;}
+    
+    /*
+    Label the data
+    */
+td:nth-of-type(0):before { content: "SELLER_ID"; }
+td:nth-of-type(1):before { content: "SELLER_FNAME"; }
+td:nth-of-type(2):before { content: "SELLER_LNAME"; }
+td:nth-of-type(3):before { content: "SELLER_ADDRESS"; }
+td:nth-of-type(4):before { content: "SELLER_SUBURB"; }
+td:nth-of-type(5):before { content: "SELLER_STATE"; }
+td:nth-of-type(6):before { content: "SELLER_PHONE"; }
+td:nth-of-type(7):before { content: "SELLER_MOBILE"; }
+td:nth-of-type(8):before { content: "SELLER_EMAIL"; }
+td:nth-of-type(9):before { content: "SELLER_MAILING"; }
+  }
+  
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen
+  and (min-device-width : 320px)
+  and (max-device-width : 480px) {
+    body { 
+      padding: 0; 
+      margin: 0; 
+      width: 320px; }
+    }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body { 
+      width: 495px; 
+    }
+  }
+  
+  </style>
+  <!--<![endif]-->
+<script type="text/javascript">
+
+lsearch = function(){
+  //this.term = document.getElementById('S').value.toUpperCase();
+  var s = document.getElementById('search').value.toLowerCase();
+  rows = document.getElementById('data').getElementsByTagName('TR');
+  for(var i=0;i<rows.length;i++){
+    if (s =="" ){
+      rows[i].style.display ='';
+    } else if ( rows[i].innerText.toLowerCase().indexOf(s) != -1 ) {
+      rows[i].style.display ='';
+    } else {
+      rows[i].style.display ='none';
+    }
+  }
+  this.time = false;
+}
+
+</script>
+</head>
+
+<body>
+<h1>Seller</h1> 
+<table><thead><tr>	<th>SELLER_ID</th>
+	<th>SELLER_FNAME</th>
+	<th>SELLER_LNAME</th>
+	<th>SELLER_ADDRESS</th>
+	<th>SELLER_SUBURB</th>
+	<th>SELLER_STATE</th>
+	<th>SELLER_PHONE</th>
+	<th>SELLER_MOBILE</th>
+	<th>SELLER_EMAIL</th>
+	<th>SELLER_MAILING</th>
+</tr></thead>
+<tbody id="data">
+
+	<tr>
+<td align="right">1</td>
+<td>Jack</td>
+<td>Morrison</td>
+<td>1 Soldier Lane</td>
+<td>Clayton</td>
+<td>VIC</td>
+<td>0123456789</td>
+<td>&nbsp;</td>
+<td>jmorrison@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">2</td>
+<td>Hanzo</td>
+<td>Shimada</td>
+<td>4/23 Center Road</td>
+<td>Ormond</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0234567891</td>
+<td>hshimada@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">3</td>
+<td>Lucio</td>
+<td>Santos</td>
+<td>63 Jammin Street</td>
+<td>Bentleigh</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>lsantos@omail.com</td>
+<td>N</td>
+	</tr>
+	<tr>
+<td align="right">4</td>
+<td>Jesse</td>
+<td>McCree</td>
+<td>39 Cowboy Parade</td>
+<td>Braeside</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0434123876</td>
+<td>jmcree@omail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">5</td>
+<td>Gabriel</td>
+<td>Reyes</td>
+<td>420 Edgy Road</td>
+<td>Brighton</td>
+<td>VIC</td>
+<td>0398765432</td>
+<td>&nbsp;</td>
+<td>greyes@omail.com</td>
+<td>N</td>
+	</tr>
+	<tr>
+<td align="right">6</td>
+<td>Billy</td>
+<td>Bob</td>
+<td>9 Country Avenue</td>
+<td>Frankston</td>
+<td>VIC</td>
+<td>0394587878</td>
+<td>&nbsp;</td>
+<td>bbobboy@mail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">7</td>
+<td>Jimbles</td>
+<td>Jambles</td>
+<td>73 Road Street</td>
+<td>Brighton East</td>
+<td>VIC</td>
+<td>0398765432</td>
+<td>&nbsp;</td>
+<td>jjjam@hotmail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">8</td>
+<td>Gabby</td>
+<td>Redd</td>
+<td>5 Secret Parade</td>
+<td>Toorak</td>
+<td>VIC</td>
+<td>&nbsp;</td>
+<td>0487112665</td>
+<td>gredd@mail.com</td>
+<td>N</td>
+	</tr>
+	<tr>
+<td align="right">9</td>
+<td>Darcie</td>
+<td>Swan</td>
+<td>23 Fancy Way</td>
+<td>Brunswick</td>
+<td>VIC</td>
+<td>0398987878</td>
+<td>&nbsp;</td>
+<td>dstft@gmail.com</td>
+<td>Y</td>
+	</tr>
+	<tr>
+<td align="right">10</td>
+<td>Mitch</td>
+<td>Whales</td>
+<td>23 Fancy Way</td>
+<td>Brunswick</td>
+<td>VIC</td>
+<td>0398987878</td>
+<td>&nbsp;</td>
+<td>dstft2@gmail.com</td>
+<td>Y</td>
+	</tr>
+</tbody></table><!-- SQL:
+select SELLER_ID SELLER_ID, SELLER_FNAME SELLER_FNAME, SELLER_LNAME SELLER_LNAME, SELLER_ADDRESS SELLER_ADDRESS, SELLER_SUBURB SELLER_SUBURB, SELLER_STATE SELLER_STATE, SELLER_PHONE SELLER_PHONE, SELLER_MOBILE SELLER_MOBILE, SELLER_EMAIL SELLER_EMAIL, SELLER_MAILING SELLER_MAILING from (select * from "S26913224"."SELLER")--></body></html>
