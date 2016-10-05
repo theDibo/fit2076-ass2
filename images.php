@@ -64,6 +64,8 @@ $dir = opendir($imagedir);
 	  	  		<?php
 				$imageext = array("jpg", "png", "gif");
 				
+				$results = false;
+				
 	  	  		while($file = readdir($dir)) {
 					
 					if ($file == "." || $file =="..") {
@@ -75,7 +77,7 @@ $dir = opendir($imagedir);
 						$ext = pathinfo($file, PATHINFO_EXTENSION);
 						// Check that the file is an image
 						if (in_array($ext, $imageext)) {
-							
+							$results = true;
 							echo "<tr>";
 							echo "<td><img src='property_images/".$file."' alt='".$file."' class='small-property-image'/></td>";
 							echo "<td><p>".ceil(filesize("property_images/".$file) / 1024)." KB</p></td>";
@@ -113,6 +115,9 @@ $dir = opendir($imagedir);
 						}
 						
 					}
+				}
+				if (!$results) {
+					echo "<tr><td colspan='4'>No images to display.</td></tr>";
 				}
 				?>
 			</table>
