@@ -132,11 +132,12 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "</p>";
 						echo "<p><a href='sellers.php'>Return to Seller Page</a></p>";
 					}
+                    oci_free_statement($stmt);
 				}
 			?>
 		</div>
         <?php
-            oci_free_statement($stmt);
+            
             oci_close($conn);
         ?>
 		<div class="col-sm-2 sidenav">
@@ -144,8 +145,6 @@ $conn = oci_connect($UName, $PWord, $DB)
 		</div>
 	</div>
 </div>
-
-<a href="display_source.php?page=create_seller.php" target="_blank"><img src="images/client.png" alt="client"/></a>
 
 <?php include("footer.php"); ?>
 

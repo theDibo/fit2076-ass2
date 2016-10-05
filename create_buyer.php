@@ -131,24 +131,22 @@ $conn = oci_connect($UName, $PWord, $DB)
 						echo "Error: the buyer could not be inserted.";
 						echo "</p>";
 						echo "<p><a href='buyers.php'>Return to buyer Page</a></p>";
-					}				
-					oci_free_statement($stmt);
+					}
+                    oci_free_statement($stmt);
 				}
 			?>
 		</div>
+        <?php
+            
+            oci_close($conn);
+        ?>
 		<div class="col-sm-2 sidenav">
 		  <!-- Blank for spacing -->
 		</div>
 	</div>
 </div>
 
-<a href="display_source.php?page=create_buyer.php" target="_blank"><img src="images/client.png" alt="client"/></a>
-
 <?php include("footer.php"); ?>
 
 </body>
 </html>
-
-<?php
-	oci_close($conn);
-?>

@@ -21,26 +21,6 @@ INSERT INTO Seller VALUES (
 seller_seq.nextval, 'Gabriel', 'Reyes', '420 Edgy Road', 'Brighton', 'VIC', '0398765432', null, 'greyes@omail.com', 'N'
 );
 
-INSERT INTO Seller VALUES (
-seller_seq.nextval, 'Billy', 'Bob', '9 Country Avenue', 'Frankston', 'VIC', '0394587878', null, 'bbobboy@mail.com', 'Y'
-);
-
-INSERT INTO Seller VALUES (
-seller_seq.nextval, 'Jimbles', 'Jambles', '73 Road Street', 'Brighton East', 'VIC', '0398765432', null, 'jjjam@hotmail.com', 'Y'
-);
-
-INSERT INTO Seller VALUES (
-seller_seq.nextval, 'Gabby', 'Redd', '5 Secret Parade', 'Toorak', 'VIC', null, '0487112665', 'gredd@mail.com', 'N'
-);
-
-INSERT INTO Seller VALUES (
-seller_seq.nextval, 'Darcie', 'Swan', '23 Fancy Way', 'Brunswick', 'VIC', '0398987878', null, 'dstft@gmail.com', 'Y'
-);
-
-INSERT INTO Seller VALUES (
-seller_seq.nextval, 'Mitch', 'Whales', '23 Fancy Way', 'Brunswick', 'VIC', '0398987878', null, 'dstft2@gmail.com', 'Y'
-);
-
 /* Buyer Data */
 INSERT INTO Buyer VALUES (
 buyer_seq.nextval, 'Lena', 'Oxton', '6 Speedy Lane', 'Ormond', 'VIC', null, '0436454656', 'loxton@omail.com', 'Y'
@@ -60,26 +40,6 @@ buyer_seq.nextval, 'Amelie', 'Lacroix', '2 Scope Street', 'Bentleigh', 'VIC', nu
 
 INSERT INTO Buyer VALUES (
 buyer_seq.nextval, 'Mako', 'Rutledge', '51 Rough Street', 'Frankston', 'VIC', '0387569887', null, 'mrutledge@omail.com', 'Y'
-);
-
-INSERT INTO Buyer VALUES (
-buyer_seq.nextval, 'Markus', 'Makers', '11 Road Street', 'Frankston', 'VIC', '0398565151', null, 'makeme@gmail.com', 'Y'
-);
-
-INSERT INTO Buyer VALUES (
-buyer_seq.nextval, 'Fisherman', 'Phil', '13 Ocean Way', 'Black Rock', 'VIC', null, '0436785454', 'atchme@mail.com', 'Y'
-);
-
-INSERT INTO Buyer VALUES (
-buyer_seq.nextval, 'Sheldon', 'Scully', '64 Street Parade', 'Brunswick', 'VIC', '0398765454', null, 'scullboi@omail.com', 'Y'
-);
-
-INSERT INTO Buyer VALUES (
-buyer_seq.nextval, 'Barry', 'Bartledge', '123 High Road', 'Bacchus March', 'VIC', '0398321654', null, 'bazzaaa@pmail.com', 'Y'
-);
-
-INSERT INTO Buyer VALUES (
-buyer_seq.nextval, 'Thomas', 'Tankeng', '51 Sodor Avenue', 'Clayton', 'VIC', null, '0487565323', 'peeppeep@smail.com', 'Y'
 );
 
 /* PropertyType Data */
