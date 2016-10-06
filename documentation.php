@@ -6,114 +6,6 @@ include("connection.php");
 $conn = oci_connect($UName, $PWord, $DB)
 	or die("Error: Couldn't log in to database.");
 
-define('FPDF_FONTPATH','FPDF/font/');
-  require('FPDF/fpdf.php');
-  
-  class XFPDF extends FPDF
-  {
-    function FancyTable($header,$data)
-    {
-      $this->SetFillColor(255,0,0);       
-      $this->SetTextColor(255,255,255);   
-      $this->SetDrawColor(128,0,0);      
-      $this->SetLineWidth(.3);        
-      $this->SetFont('','B');
-      $w=array(10,25,25,50,40,25,20,20,40,15);
-
-      $this->Cell($w[0],9,'ID',1,0,'C',1);
-        $this->Cell($w[1],9,'First name',1,0,'C',1);
-        $this->Cell($w[2],9,'Last name',1,0,'C',1);
-        $this->Cell($w[3],9,'Address',1,0,'C',1);
-        $this->Cell($w[4],9,'Suburb',1,0,'C',1);
-        $this->Cell($w[5],9,'State',1,0,'C',1);
-        $this->Cell($w[6],9,'Phone',1,0,'C',1);
-        $this->Cell($w[7],9,'Mobile',1,0,'C',1);
-        $this->Cell($w[8],9,'Email',1,0,'C',1);
-        $this->Cell($w[9],9,'Mailing',1,0,'C',1);
-        
-      $this->Ln();
-      $this->SetFillColor(224,235,255);
-      $this->SetTextColor(0,0,0);     
-      $this->SetFont('');         
-      $fill=0;
-      
-      foreach($data as $row)
-      {
-        $this->Cell($w[0],7,$row[0],'LR',0,'L',$fill);
-        $this->Cell($w[1],7,$row[1],'LR',0,'L',$fill);
-        $this->Cell($w[2],7,$row[2],'LR',0,'L',$fill);
-        $this->Cell($w[3],7,$row[3],'LR',0,'L',$fill);
-        $this->Cell($w[4],7,$row[4],'LR',0,'L',$fill);
-        $this->Cell($w[5],7,$row[5],'LR',0,'L',$fill);
-        $this->Cell($w[6],7,$row[6],'LR',0,'L',$fill);
-        $this->Cell($w[7],7,$row[7],'LR',0,'L',$fill);
-        $this->Cell($w[8],7,$row[8],'LR',0,'L',$fill);
-          $this->Cell($w[9],7,$row[9],'LR',0,'L',$fill);
-        $this->Ln();
-        $fill=!$fill;
-      } 
-      $this->Cell(array_sum($w),0,'','T'); 
-    }
-  }
-  
-  include("connection.php");
-  $conn = oci_connect($UName, $PWord, $DB)
-	or die("Error: Couldn't log in to database.");
-  $query="SELECT * FROM BUYER ORDER BY BUYER_FNAME";
-  $stmt = oci_parse($conn,$query);
-  oci_execute($stmt);
-  
-  $nrows = oci_fetch_all($stmt,$results);
-
-  if ($nrows> 0)
-  {
-    $data = array();
-    $header= array();
-    while(list($column_name) = each($results))
-    {
-      $header[]=$column_name;
-    }
-    for ($i = 0; $i<$nrows; $i++)
-    {
-      reset($results);
-      $j=0;
-      while (list(,$column_value) = each($results))
-      {
-        $data[$i][$j] = $column_value[$i];
-        $j++;
-      }
-    }
-  }
-  else
-  {
-    echo "No Records found";
-  }
-  oci_free_statement($stmt);
-  
-  $pdf=new XFPDF();
-  $pdf->Open();
-  $pdf->SetFont('Arial','',9);
-  $pdf->AddPage('L');
-  $pdf->FancyTable($header,$data);
-  $pdf->Output("buyer_PDF.pdf");
-
-if (isset($_GET["search"]) && $_GET["search"] != "") {
-	// Something has been searched, get matching property records
-	$query = "SELECT* FROM BUYER WHERE lower(BUYER_FNAME) LIKE '%' || :search || '%' OR lower(BUYER_LNAME) LIKE '%' || :search || '%' OR lower(BUYER_ADDRESS) LIKE '%' || :search || '%' OR lower(BUYER_SUBURB) LIKE '%' || :search || '%' OR lower(BUYER_STATE) LIKE '%' || :search || '%' ORDER BY BUYER_ID";
-	$stmt = oci_parse($conn, $query);
-	oci_bind_by_name($stmt,  ":search", $_GET["search"]);
-	oci_execute($stmt);
-} else {
-	// Nothing has been searched, get all property records
-	$query = "SELECT * FROM BUYER ORDER BY BUYER_ID";
-    $stmt = oci_parse($conn, $query);
-    oci_execute($stmt);
-}
-
-$query = "SELECT * FROM BUYER ORDER BY BUYER_ID";
-$stmt = oci_parse($conn, $query);
-oci_execute($stmt);
-
 ?>
 
 <html lang="en">
@@ -146,14 +38,31 @@ oci_execute($stmt);
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
   	  
   	  <center><h1 class="page-title">Documentation</h1></center>
-  	           
-
-            
-            
-            
-            
-            
-            
+            <center></center>
+            <table>
+            <caption>Authors</caption>
+                <tr>
+                <th>Name</th>
+                <th>Student ID</th>
+                </tr>
+                <tr>
+                <td>Ha Nam Anh Pham</td>
+                <td>Dougulas Rintoul</td>
+                </tr>
+                <tr>
+                <td>26060167</td>
+                <td>26913224</td>
+                </tr>
+            </table>
+            <h4>Date of submission: 7th October, 2016</h4>
+            </br>
+            <h3>Authcate Details</h3>
+            <h4>Username: s26913224</h4>
+        <h4>Password: monash00</h4>
+        </br>
+        <a href="Documentation/CreateTable.pdf"><h3>Click here for the 'Click table' statements</h3></a>
+        <a href="Documentation/export.html"><h3>click here for the current data in the database</h3></a>
+        <a href="Documentation/WorkBreakdown.pdf"><h3>Click here for the work breakdown</h3></a>
 		</div>
 	</div>
 	<div class="col-sm-2 sidenav">
@@ -165,8 +74,3 @@ oci_execute($stmt);
 
 </body>
 </html>
-
-<?php
-	oci_free_statement($stmt);
-	oci_close($conn);
-?>
