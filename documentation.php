@@ -20,6 +20,18 @@ $conn = oci_connect($UName, $PWord, $DB)
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <style>
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+th {
+    text-align: center;
+}
+</style>
 </head>
 <body>
 
@@ -38,19 +50,19 @@ $conn = oci_connect($UName, $PWord, $DB)
 	  <!-- ALL CONTENT GOES INSIDE THIS DIV -->
   	  
   	  <center><h1 class="page-title">Documentation</h1></center>
-            <center></center>
-            <table>
-            <caption>Authors</caption>
+            <center>
+            <table style="width:50%">
+            <caption><h3>Authors</h3></caption>
                 <tr>
                 <th>Name</th>
                 <th>Student ID</th>
                 </tr>
                 <tr>
                 <td>Ha Nam Anh Pham</td>
-                <td>Dougulas Rintoul</td>
+                <td>26060167</td>
                 </tr>
                 <tr>
-                <td>26060167</td>
+                <td>Dougulas Rintoul</td>
                 <td>26913224</td>
                 </tr>
             </table>
@@ -63,6 +75,7 @@ $conn = oci_connect($UName, $PWord, $DB)
         <a href="Documentation/CreateTable.pdf"><h3>Click here for the 'Click table' statements</h3></a>
         <a href="Documentation/export.html"><h3>click here for the current data in the database</h3></a>
         <a href="Documentation/WorkBreakdown.pdf"><h3>Click here for the work breakdown</h3></a>
+        </center>
 		</div>
 	</div>
 	<div class="col-sm-2 sidenav">
